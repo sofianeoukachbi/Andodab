@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
 		//On donne un titre à l'AlertDialog
         adb.setTitle("Choix de la BDD");
         
-        adb.setIcon(android.R.drawable.ic_dialog_alert);
+        adb.setIcon(getResources().getDrawable(R.drawable.choix));
         
         //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
  
@@ -127,7 +127,7 @@ public class MainActivity extends Activity {
 		
 				adb.setView(alertDialogView);
 				adb.setTitle("Création d'une base");        
-		        adb.setIcon(android.R.drawable.ic_dialog_alert);
+				adb.setIcon(getResources().getDrawable(R.drawable.choix));
 		        
 //		action a faire en cliquant sur le bouton ok 
 		        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {

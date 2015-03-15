@@ -47,15 +47,17 @@ public class BddOperations {
 	}
 	
 	public List<Bdd_bean> getListBdd(){
-		Bdd_bean bean=new Bdd_bean();
+		Bdd_bean bean;
 		List<Bdd_bean> liste=new ArrayList<Bdd_bean>();
 		String columnsTest[] = new String[] {Bdd.BDD_ID,Bdd.BDD_NAME};
 		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_BDD;
 		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
 		
 		if (curTest.moveToFirst()) {
+
 			do {			
-				bean=new Bdd_bean();
+				bean=new Bdd_bean();	
+
 				bean.setBdd_id(curTest.getInt(curTest.getColumnIndex(Bdd.BDD_ID)));
 				bean.setBdd_name(curTest.getString(curTest.getColumnIndex(Bdd.BDD_NAME)));
 				liste.add(bean);
@@ -78,6 +80,7 @@ public class BddOperations {
 		
 		if (curTest.moveToFirst()) {
 			do {			
+				bean = new Primitif_bean();
 				bean.setPrimitif_id(curTest.getInt(curTest.getColumnIndex(Primitif.PRIMITIF_ID)));
 				bean.setPrimitif_name(curTest.getString(curTest.getColumnIndex(Primitif.PRIMITIF_NAME)));
 				liste.add(bean);
@@ -94,13 +97,15 @@ public class BddOperations {
 	
 	public List<Objet_bean> getListRacine(Integer bdd_id){
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
-		Objet_bean bean = new Objet_bean();
+		Objet_bean bean;
 		String columnsTest[] = new String[] { Objet.OBJET_ID,Objet.OBJET_NAME,Objet.OBJET_ID_OBJET,Objet.OBJET_SEALED,Objet.OBJET_BDD_ID };
 		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJET;
 		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
 		
 		if (curTest.moveToFirst()) {
-			do {			
+			do {	
+				bean=new Objet_bean();
+				bean = new Objet_bean();
 				bean.setObjet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID)));
 				bean.setObjet_nom(curTest.getString(curTest.getColumnIndex(Objet.OBJET_NAME)));
 				bean.setObjet_objet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID_OBJET)));
@@ -118,14 +123,14 @@ public class BddOperations {
 	
 	public List<Objet_bean> getListeObjetBDD(Integer bdd_id){
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
-		Objet_bean bean = new Objet_bean();
+		Objet_bean bean;
 		String columnsTest[] = new String[] { Objet.OBJET_ID,Objet.OBJET_NAME,Objet.OBJET_ID_OBJET,Objet.OBJET_SEALED,Objet.OBJET_BDD_ID };
 		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJET;
 		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
 		
 		if (curTest.moveToFirst()) {
 			do {
-				
+				bean = new Objet_bean();
 				bean.setObjet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID)));
 				bean.setObjet_nom(curTest.getString(curTest.getColumnIndex(Objet.OBJET_NAME)));
 				bean.setObjet_objet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID_OBJET)));
