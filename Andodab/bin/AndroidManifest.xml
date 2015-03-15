@@ -37,9 +37,11 @@
         <activity android:name=".EditValueObjectActivity" >
         </activity>
         <activity android:name=".ContentProviderExempleActivity" >
-
            
         </activity>
+        <activity android:name=".ConsultObjectsActivity" >           
+        </activity>
+        
 
         <provider
             android:name="fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider"

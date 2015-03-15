@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.upem.m2.android.andodab.DAO.BddOperations;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
+import fr.upem.m2.android.andodab.beans.Objet_bean;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -159,6 +160,9 @@ public class CreateObjectActivity extends Activity {
 	
 	public void doCreateObject(View v){		
 		Log.v("sefse", "sdssrgs");
+		
+		//Objet_bean objet = new Objet_bean("",null);
+		
 	}
 	
 	public void doAddAttribut(View v){

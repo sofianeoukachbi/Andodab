@@ -9,6 +9,7 @@ import fr.upem.m2.android.andodab.beans.Primitif_bean;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,7 +89,7 @@ public class AddAtribut extends Activity {
 		objectList.setAdapter(objectListAdaper);	
 		 
 		 List<Primitif_bean> listPrimitif = db.getListPrimitif();
-  
+		 Log.v("prim", ""+listPrimitif.size());  
 		ArrayAdapter<Primitif_bean> primitifAdapter = new ArrayAdapter<Primitif_bean>(AddAtribut.this,android.R.layout.simple_spinner_item,listPrimitif);
 		primitifAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		primitfList.setAdapter(primitifAdapter);		    
