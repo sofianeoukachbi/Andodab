@@ -88,7 +88,20 @@ public class MainActivity extends Activity {
         adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
  
-            		
+
+//            	//Lorsque l'on cliquera sur le bouton "OK", on récupère l'EditText correspondant à notre vue personnalisée (cad à alertDialogView)
+//            	EditText et = (EditText)alertDialogView.findViewById(R.id.EditText1);
+// 
+//            	//On affiche dans un Toast le texte contenu dans l'EditText de notre AlertDialog
+            	Toast.makeText(MainActivity.this, "okiii", Toast.LENGTH_SHORT).show();
+            	
+
+
+            	Intent intent = new Intent(getApplicationContext(),
+        				ConsultObjectsActivity.class);
+        		startActivity(intent);
+        		
+
           } });
         
 
@@ -129,13 +142,16 @@ public class MainActivity extends Activity {
 				adb.setTitle("Création d'une base");        
 				adb.setIcon(getResources().getDrawable(R.drawable.choix));
 		        
+				
 //		action a faire en cliquant sur le bouton ok 
 		        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
 		            	
 		            	EditText ed = (EditText)findViewById(R.id.editText1);
 		            	
+ 
 		            	bddo.CreateBdd("adembddtest");
+ 
 		            	
 		            	List<Bdd_bean> bddList = bddo.getListBdd();
 		            	

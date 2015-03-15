@@ -51,6 +51,9 @@ public class TutosAndroidProvider extends ContentProvider {
 	public static final Uri CONTENT_URI_OBJET_ATTRIBUT = Uri.parse("content://"
 			+ PROVIDER_NAME + "/ObjetAttribut");
 
+	public static final Uri CONTENT_URI_CHILD_OBJET = Uri.parse("content://"
+			+ PROVIDER_NAME + "/ChildObjet");
+	
 	public static final String CONTENT_PROVIDER_DB_NAME = "andodab.db";
 	public static final int CONTENT_PROVIDER_DB_VERSION = 2;
 
@@ -77,7 +80,9 @@ public class TutosAndroidProvider extends ContentProvider {
 	public static final String CONTENT_PROVIDER_MIME_FINAL_FLOAT = "vnd.android.cursor.item/vnd.android.content.provider.finalFloat";
 	public static final String CONTENT_PROVIDER_MIME_FINAL_STRING = "vnd.android.cursor.item/vnd.android.content.provider.finalString";
 	public static final String CONTENT_PROVIDER_MIME_OBJET_ATTRIBUT = "vnd.android.cursor.item/vnd.android.content.provider.ObjetAttribut";
-
+	public static final String CONTENT_PROVIDER_MIME_CHILD_OBJET = "vnd.android.cursor.item/vnd.android.content.provider.ChildObjet";
+	
+	
 	private static final int BDD = 100;
 	private static final int OBJET = 200;
 	private static final int ATTRIBUT = 300;
@@ -88,6 +93,7 @@ public class TutosAndroidProvider extends ContentProvider {
 	private static final int FINAL_FLOAT = 800;
 	private static final int FINAL_STRING = 900;
 	private static final int OBJET_ATTRIBUT = 1000;
+	private static final int CHILD_OBJET=1100;
 
 	private static final int BDD_ID = 101;
 	private static final int OBJET_ID = 201;
@@ -99,6 +105,7 @@ public class TutosAndroidProvider extends ContentProvider {
 	private static final int FINAL_FLOAT_ID = 801;
 	private static final int FINAL_STRING_ID = 901;
 	private static final int OBJET_ATTRIBUT_ID = 1001;
+	private static final int CHILD_OBJET_ID=1101;
 
 	
 	/**
@@ -128,6 +135,8 @@ public class TutosAndroidProvider extends ContentProvider {
 		uriMatcher.addURI(PROVIDER_NAME, "finalString/#", FINAL_STRING_ID);
 		uriMatcher.addURI(PROVIDER_NAME, "objet_attribut", OBJET_ATTRIBUT);
 		uriMatcher.addURI(PROVIDER_NAME, "objet_attribut/#", OBJET_ATTRIBUT_ID);
+		uriMatcher.addURI(PROVIDER_NAME, "child_objet", CHILD_OBJET);
+		uriMatcher.addURI(PROVIDER_NAME, "child_objet/#", CHILD_OBJET_ID);
 	}
 
 	/**
@@ -344,7 +353,8 @@ public class TutosAndroidProvider extends ContentProvider {
 			return CONTENT_PROVIDER_MIME_FINAL_STRING;
 		case OBJET_ATTRIBUT:
 			return CONTENT_PROVIDER_MIME_OBJET_ATTRIBUT;
-
+		case CHILD_OBJET:
+			return CONTENT_PROVIDER_MIME_CHILD_OBJET;  
 		default:
 			return TutosAndroidProvider.CONTENT_PROVIDER_MIME_OBJET;
 		}
@@ -980,6 +990,12 @@ public class TutosAndroidProvider extends ContentProvider {
 										+ id, null, null, null, null);
 			}
 		}
+		
+		case CHILD_OBJET: {
+			
+				return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+"=? ", selectionArgs);	
+		}
+		
 		default:
 			return null;
 		}
