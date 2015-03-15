@@ -266,7 +266,9 @@ public class TutosAndroidProvider extends ContentProvider {
 			db.execSQL("CREATE TABLE "
 					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_OBJET_ATTRIBUT
 					+ " (" + Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID
+
 					+ " INTEGER  ,"
+
 					+ Objet_Attribut.OBJET_ATTRIBUT_OBJET_ID  + " INTEGER ,"
 		            +"primary key ("+Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID+","+Objet_Attribut.OBJET_ATTRIBUT_OBJET_ID+"),"				
 					+ "FOREIGN KEY(" + Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID

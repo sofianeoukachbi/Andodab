@@ -1,13 +1,10 @@
 package fr.upem.m2.android.andodab;
 
-
-
 import java.net.URL;
 import java.util.List;
 
 import fr.upem.m2.android.andodab.DAO.BddOperations;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
-
 
 import android.R.color;
 import android.app.Activity;
@@ -40,20 +37,19 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accueil);
-		
-	
+
 		bddo = new BddOperations(this);
 		initView();
 		initEventView();
 	}
 
-//________________________________________________________________________________________
+	// ________________________________________________________________________________________
 
 	/**
 	 * cette méthode nous permet d'initialiser nos vues (les boutton et autres)
 	 */
 	public void initView() {
-		
+
 		consulterBaseBtn = (Button) findViewById(R.id.bt_afficher);
 		creerBaseBtn = (Button) findViewById(R.id.bt_creer_base);
 		creerObjetBtn = (Button) findViewById(R.id.bt_ajout_objet);
@@ -61,21 +57,22 @@ public class MainActivity extends Activity {
 		listBdd = (Spinner) findViewById(R.id.list_bdd);
 
 	}
-	
-//________________________________________________________________________________________
+
+	// ________________________________________________________________________________________
 	/*
-	 * ititialisation de la boite de dialog nous permitant d'afficher les objet d'une base
+	 * ititialisation de la boite de dialog nous permitant d'afficher les objet
+	 * d'une base
 	 */
 	public void initListAfficheDialogBDD() {
 		// instanciation du layout en tant que view
 		LayoutInflater factory = LayoutInflater.from(this);
-		final View alertDialogView = factory.inflate(R.layout.affiche_dialog_layout, null);
+		final View alertDialogView = factory.inflate(
+				R.layout.affiche_dialog_layout, null);
 
 		// création de l'alret dialog
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-	
-		
-		//affichage de la vue que l'on a créer pour le AlertDialog
+
+		// affichage de la vue que l'on a créer pour le AlertDialog
 		adb.setView(alertDialogView);
 		
 		//On donne un titre à l'AlertDialog
@@ -125,67 +122,64 @@ public class MainActivity extends Activity {
         Drawable img = getBaseContext().getResources().getDrawable( R.drawable.ok );
         img.setBounds( 0, 0, 60, 60 );
         pbutton.setCompoundDrawables( img, null, null, null );
+
 	}
 
-//________________________________________________________________________________________
+	// ________________________________________________________________________________________
 	/*
-	 * ititialisation de la boite de dialog nous permetant de créer un nouvelle base de donnée
+	 * ititialisation de la boite de dialog nous permetant de créer un nouvelle
+	 * base de donnée
 	 */
-	public void initCreerBddDialog(){
-		
-		LayoutInflater factory = LayoutInflater.from(this);
-		final View alertDialogView = factory.inflate(R.layout.creer_bdd_dialog_layout, null);
-		
-		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-		
-				adb.setView(alertDialogView);
-				adb.setTitle("Création d'une base");        
-				adb.setIcon(getResources().getDrawable(R.drawable.choix));
-		        
-				
-//		action a faire en cliquant sur le bouton ok 
-		        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-		            public void onClick(DialogInterface dialog, int which) {
-		            	
-		            	EditText ed = (EditText)findViewById(R.id.editText1);
-		            	
- 
-		            	bddo.CreateBdd("adembddtest");
- 
-		            	
-		            	List<Bdd_bean> bddList = bddo.getListBdd();
-		            	
-		            	for (Bdd_bean b : bddList){
-	            			Log.v("bdd", b.getBdd_name());
-	            		}
-		            	
-		          } });
+	public void initCreerBddDialog() {
 
-		 
-//		action a faire en cas d'annulation 
-		        adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-		            public void onClick(DialogInterface dialog, int which) {
-		            
-//		            	ne rien faire
-		            	
-		          } });
-//		        adb.show();
-		        AlertDialog alert = adb.create();
-		        alert.show();
-		        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-		        nbutton.setBackgroundColor(getResources().getColor(R.color.no));
-		        Drawable imgn = getBaseContext().getResources().getDrawable( R.drawable.annuler );
-		        imgn.setBounds( 0, 0, 60, 60 );
-		        nbutton.setCompoundDrawables( imgn, null, null, null );
-		        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-		        pbutton.setBackgroundColor(getResources().getColor(R.color.success));
-//		        pbutton.setBackgroundResource(resid)
-		        Drawable img = getBaseContext().getResources().getDrawable( R.drawable.ok );
-		        img.setBounds( 0, 0, 60, 60 );
-		        pbutton.setCompoundDrawables( img, null, null, null );
+		LayoutInflater factory = LayoutInflater.from(this);
+		final View alertDialogView = factory.inflate(
+				R.layout.creer_bdd_dialog_layout, null);
+
+		AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+		adb.setView(alertDialogView);
+		adb.setTitle("Création d'une base");
+		adb.setIcon(getResources().getDrawable(R.drawable.choix));
+
+		// création d'une base de données
+		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				EditText ed = (EditText) alertDialogView
+						.findViewById(R.id.edt_nom_bdd);
+				String name_bdd = ed.getText().toString();
+				bddo.CreateBdd(name_bdd);
+			}
+		});
+
+		// action a faire en cas d'annulation
+		adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+
+				// ne rien faire
+
+			}
+		});
+		// adb.show();
+		AlertDialog alert = adb.create();
+		alert.show();
+		Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+		nbutton.setBackgroundColor(getResources().getColor(R.color.no));
+		Drawable imgn = getBaseContext().getResources().getDrawable(
+				R.drawable.annuler);
+		imgn.setBounds(0, 0, 60, 60);
+		nbutton.setCompoundDrawables(imgn, null, null, null);
+		Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+		pbutton.setBackgroundColor(getResources().getColor(R.color.success));
+		// pbutton.setBackgroundResource(resid)
+		Drawable img = getBaseContext().getResources().getDrawable(
+				R.drawable.ok);
+		img.setBounds(0, 0, 60, 60);
+		pbutton.setCompoundDrawables(img, null, null, null);
+
 	}
 
-//________________________________________________________________________________________
+	// ________________________________________________________________________________________
 	/*
 	 * cette méthode nous permet d'initialiser les listener
 	 */
@@ -196,12 +190,11 @@ public class MainActivity extends Activity {
 		editionObjetBtn.setOnClickListener(editionObjetBtnListener);
 	}
 
-	
-//________________________________________________________________________________________
+	// ________________________________________________________________________________________
 	/*
 	 * Déclaration des listener pour chaque objet (bouton)
 	 */
-	
+
 	private OnClickListener consulterBaseBtnListener = new OnClickListener() {
 
 		@Override
