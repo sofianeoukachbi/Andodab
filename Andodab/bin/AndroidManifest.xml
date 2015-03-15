@@ -39,8 +39,8 @@
         </activity>
 
         <provider
-            android:name="fr.upem.m2.android.andodab.provider.TutosAndroidProvider"
-            android:authorities="fr.upem.m2.android.andodab.provider" />
+            android:name="fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider"
+            android:authorities="fr.upem.m2.android.andodab.providerAndo" />
     </application>
 
 </manifest>

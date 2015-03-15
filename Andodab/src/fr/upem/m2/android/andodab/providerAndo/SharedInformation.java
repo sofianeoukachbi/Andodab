@@ -1,4 +1,4 @@
-package fr.upem.m2.android.andodab.provider;
+package fr.upem.m2.android.andodab.providerAndo;
 
 import android.provider.BaseColumns;
 
