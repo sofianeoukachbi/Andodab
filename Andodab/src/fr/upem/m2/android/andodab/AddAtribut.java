@@ -21,6 +21,7 @@ public class AddAtribut extends Activity {
 	private TextView valueLbl,objetLbl,primitifLbl;
 	private EditText valueAttrib,nomAttrib;
 	private String attribFinalValue;
+	//test
 	
 	
 	@Override
