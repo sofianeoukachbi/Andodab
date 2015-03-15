@@ -39,16 +39,18 @@
         <activity android:name=".ContentProviderExempleActivity" >
            
         </activity>
-        <activity android:name=".ConsultObjectsActivity" >           
+ 
+            <activity android:name=".ConsultObjectsActivity" >
+
+           
         </activity>
-        
+ 
 
         <provider
             android:name="fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider"
- 
- 
+
             android:authorities="fr.upem.m2.android.andodab.provider" />
- 
+
     </application>
 
 </manifest>

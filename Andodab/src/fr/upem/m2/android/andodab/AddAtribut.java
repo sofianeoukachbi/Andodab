@@ -27,18 +27,14 @@ public class AddAtribut extends Activity {
 	private EditText valueAttrib,nomAttrib;
 	private String attribFinalValue;
 	private BddOperations db;
-	//test
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_atribut);
 		
 		db = new BddOperations(this);
-		
-		
-		
+
 		attribType = (Spinner) findViewById(R.id.attribType);
 		objectList = (Spinner) findViewById(R.id.objectAttrib);
 		primitfList = (Spinner) findViewById(R.id.primitifAttrib);

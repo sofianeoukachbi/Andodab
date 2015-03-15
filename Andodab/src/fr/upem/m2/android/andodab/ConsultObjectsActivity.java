@@ -9,6 +9,7 @@ import fr.upem.m2.android.andodab.beans.Attribut_bean;
 import fr.upem.m2.android.andodab.beans.Objet_bean;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
@@ -26,9 +27,11 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 		setContentView(R.layout.consult_objects);	
 	
 		db = new BddOperations(this);
+		int dbId = getIntent().getIntExtra("id", 0);
 		
-		db.createObjet(new Objet_bean("obj1", 0)); 
-		db.createObjet(new Objet_bean("obj2", 1)); 
+		Log.v("id", ""+dbId);
+		db.createObjet(new Objet_bean("obj1", null,dbId)); 
+		db.createObjet(new Objet_bean("obj2", null,dbId)); 
 		
 		
 		super.onCreate(savedInstanceState);
@@ -37,10 +40,10 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 		/**
 		 * Retrouner de la base de données la liste des objets racine
 		 */
-		int dbId = getIntent().getIntExtra("db_id", 0);
+		
 		
 		List<Objet_bean> listRacine = db.getListRacine(dbId);
-		
+		Log.v("taille", ""+listRacine.size());
 		x=0;
 		y=0;
 		mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
