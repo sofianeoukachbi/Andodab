@@ -3,17 +3,16 @@ package fr.upem.m2.android.andodab.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.upem.m2.android.andodab.ContentProviderExempleActivity;
 import fr.upem.m2.android.andodab.beans.Attribut_bean;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
 import fr.upem.m2.android.andodab.beans.Objet_bean;
 import fr.upem.m2.android.andodab.beans.Primitif_bean;
-import fr.upem.m2.android.andodab.provider.SharedInformation.Attribut;
-import fr.upem.m2.android.andodab.provider.SharedInformation.Objet;
-import fr.upem.m2.android.andodab.provider.SharedInformation.Primitif;
-import fr.upem.m2.android.andodab.provider.TutosAndroidProvider;
-import fr.upem.m2.android.andodab.provider.SharedInformation.Bdd;
-import fr.upem.m2.android.andodab.provider.SharedInformation.Final;
+import fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Attribut;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Bdd;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Final;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Objet;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Primitif;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -56,6 +55,7 @@ public class BddOperations {
 		
 		if (curTest.moveToFirst()) {
 			do {			
+				bean=new Bdd_bean();
 				bean.setBdd_id(curTest.getInt(curTest.getColumnIndex(Bdd.BDD_ID)));
 				bean.setBdd_name(curTest.getString(curTest.getColumnIndex(Bdd.BDD_NAME)));
 				liste.add(bean);

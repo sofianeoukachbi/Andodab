@@ -1,6 +1,6 @@
-package fr.upem.m2.android.andodab.provider;
+package fr.upem.m2.android.andodab.providerAndo;
 
-import fr.upem.m2.android.andodab.provider.SharedInformation.*;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.*;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
