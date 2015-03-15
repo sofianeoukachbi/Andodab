@@ -2,6 +2,8 @@ package fr.upem.m2.android.andodab;
 
 import java.util.ArrayList;
 
+import fr.upem.m2.android.andodab.DAO.BddOperations;
+
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
@@ -22,12 +24,15 @@ public class EditValueObjectActivity extends Activity {
 	private LinearLayout simplelinear;
 	Button btOk;
 	Button btno;
-	
+	private BddOperations bddo;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		   super.onCreate(savedInstanceState);
+		   
+		   bddo = new BddOperations(this);
+		   
 	        // creating LinearLayout
 	        LinearLayout linLayout = new LinearLayout(this);
 	        // specifying vertical orientation

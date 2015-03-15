@@ -74,43 +74,55 @@ public class MainActivity extends Activity {
 
 		// affichage de la vue que l'on a créer pour le AlertDialog
 		adb.setView(alertDialogView);
+		
+		//On donne un titre à l'AlertDialog
+        adb.setTitle("Choix de la BDD");
+        
+        adb.setIcon(getResources().getDrawable(R.drawable.choix));
+        
+        //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
+ 
+        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+ 
 
-		// On donne un titre à l'AlertDialog
-		adb.setTitle("Choix de la BDD");
+//            	//Lorsque l'on cliquera sur le bouton "OK", on récupère l'EditText correspondant à notre vue personnalisée (cad à alertDialogView)
+//            	EditText et = (EditText)alertDialogView.findViewById(R.id.EditText1);
+// 
+//            	//On affiche dans un Toast le texte contenu dans l'EditText de notre AlertDialog
+            	Toast.makeText(MainActivity.this, "okiii", Toast.LENGTH_SHORT).show();
+            	
 
-		adb.setIcon(getResources().getDrawable(R.drawable.choix));
 
-		// On affecte un bouton "OK" à notre AlertDialog et on lui affecte un
-		// évènement
+            	Intent intent = new Intent(getApplicationContext(),
+        				ConsultObjectsActivity.class);
+        		startActivity(intent);
+        		
 
-		adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
+          } });
+        
 
-			}
-		});
 
-		// On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un
-		// évènement
-		adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
+ 
+        //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
+        adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	
+          } });
+        AlertDialog alert = adb.create();
+        alert.show();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setBackgroundColor(getResources().getColor(R.color.no));
+        Drawable imgn = getBaseContext().getResources().getDrawable( R.drawable.annuler );
+        imgn.setBounds( 0, 0, 60, 60 );
+        nbutton.setCompoundDrawables( imgn, null, null, null );
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setBackgroundColor(getResources().getColor(R.color.success));
+//        pbutton.setBackgroundResource(resid)
+        Drawable img = getBaseContext().getResources().getDrawable( R.drawable.ok );
+        img.setBounds( 0, 0, 60, 60 );
+        pbutton.setCompoundDrawables( img, null, null, null );
 
-			}
-		});
-		AlertDialog alert = adb.create();
-		alert.show();
-		Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-		nbutton.setBackgroundColor(getResources().getColor(R.color.no));
-		Drawable imgn = getBaseContext().getResources().getDrawable(
-				R.drawable.annuler);
-		imgn.setBounds(0, 0, 60, 60);
-		nbutton.setCompoundDrawables(imgn, null, null, null);
-		Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-		pbutton.setBackgroundColor(getResources().getColor(R.color.success));
-		// pbutton.setBackgroundResource(resid)
-		Drawable img = getBaseContext().getResources().getDrawable(
-				R.drawable.ok);
-		img.setBounds(0, 0, 60, 60);
-		pbutton.setCompoundDrawables(img, null, null, null);
 	}
 
 	// ________________________________________________________________________________________
@@ -137,11 +149,6 @@ public class MainActivity extends Activity {
 						.findViewById(R.id.edt_nom_bdd);
 				String name_bdd = ed.getText().toString();
 				bddo.CreateBdd(name_bdd);
-				
-				for(Bdd_bean b : bddo.getListBdd()){
-					Log.v("bdd", b.getBdd_name());
-				}
-				
 			}
 		});
 
@@ -169,6 +176,7 @@ public class MainActivity extends Activity {
 				R.drawable.ok);
 		img.setBounds(0, 0, 60, 60);
 		pbutton.setCompoundDrawables(img, null, null, null);
+
 	}
 
 	// ________________________________________________________________________________________

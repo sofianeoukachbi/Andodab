@@ -1,5 +1,9 @@
 package fr.upem.m2.android.andodab.beans;
 public class Objet_bean {
+	@Override
+	public String toString() {
+		return objet_nom ;
+	}
 	private Integer objet_id;
 	private String objet_nom;
 	private Integer objet_objet_id;
