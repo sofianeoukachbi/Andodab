@@ -135,7 +135,7 @@ public final class R {
         public static final int cancelBtn=0x7f0b0021;
         public static final int dbName=0x7f0b0015;
         public static final int editAtt=0x7f0b0012;
-        public static final int editText1=0x7f0b0023;
+        public static final int edt_nom_bdd=0x7f0b0023;
         public static final int et_email=0x7f0b0029;
         public static final int et_password=0x7f0b002a;
         public static final int id_btn_delete_ob=0x7f0b0027;
