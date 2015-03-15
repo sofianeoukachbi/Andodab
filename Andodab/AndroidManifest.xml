@@ -40,11 +40,8 @@
 
         <provider
             android:name="fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider"
-<<<<<<< HEAD
+
             android:authorities="fr.upem.m2.android.andodab.providerAndo" />
-=======
-            android:authorities="fr.upem.m2.android.andodab.provider" />
->>>>>>> 1e25307cbf31066a21ab1d43448fce8a673c0316
     </application>
 
 </manifest>

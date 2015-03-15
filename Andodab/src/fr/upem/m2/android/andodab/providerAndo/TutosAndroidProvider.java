@@ -52,7 +52,16 @@ public class TutosAndroidProvider extends ContentProvider {
 			+ PROVIDER_NAME + "/ObjetAttribut");
 
 	public static final Uri CONTENT_URI_CHILD_OBJET = Uri.parse("content://"
-			+ PROVIDER_NAME + "/ChildObjet");
+			+ PROVIDER_NAME + "/childObjet");
+	
+	public static final Uri CONTENT_URI_MAXOBJET = Uri.parse("content://"
+			+ PROVIDER_NAME + "/MaxObjet");
+	
+	public static final Uri CONTENT_URI_MAXATTRIBUT = Uri.parse("content://"
+			+ PROVIDER_NAME + "/MaxAttribut");
+	
+	public static final Uri CONTENT_URI_MAXFINAL = Uri.parse("content://"
+			+ PROVIDER_NAME + "/MaxFinal");
 	
 	public static final String CONTENT_PROVIDER_DB_NAME = "andodab.db";
 	public static final int CONTENT_PROVIDER_DB_VERSION = 2;
@@ -94,6 +103,11 @@ public class TutosAndroidProvider extends ContentProvider {
 	private static final int FINAL_STRING = 900;
 	private static final int OBJET_ATTRIBUT = 1000;
 	private static final int CHILD_OBJET=1100;
+	private static final int MAX_OBJET=1200;
+	private static final int MAX_ATTRIBUT=1300;
+	private static final int MAX_FINAL=1400;
+	
+	
 
 	private static final int BDD_ID = 101;
 	private static final int OBJET_ID = 201;
@@ -135,8 +149,11 @@ public class TutosAndroidProvider extends ContentProvider {
 		uriMatcher.addURI(PROVIDER_NAME, "finalString/#", FINAL_STRING_ID);
 		uriMatcher.addURI(PROVIDER_NAME, "objet_attribut", OBJET_ATTRIBUT);
 		uriMatcher.addURI(PROVIDER_NAME, "objet_attribut/#", OBJET_ATTRIBUT_ID);
-		uriMatcher.addURI(PROVIDER_NAME, "child_objet", CHILD_OBJET);
-		uriMatcher.addURI(PROVIDER_NAME, "child_objet/#", CHILD_OBJET_ID);
+		uriMatcher.addURI(PROVIDER_NAME, "childObjet", CHILD_OBJET);
+		uriMatcher.addURI(PROVIDER_NAME, "childObjet/#", CHILD_OBJET_ID);
+		uriMatcher.addURI(PROVIDER_NAME, "MaxObjet", MAX_OBJET);
+		uriMatcher.addURI(PROVIDER_NAME, "MaxAttribut", MAX_ATTRIBUT);
+		uriMatcher.addURI(PROVIDER_NAME, "MaxFinal", MAX_FINAL);
 	}
 
 	/**
@@ -991,11 +1008,40 @@ public class TutosAndroidProvider extends ContentProvider {
 			}
 		}
 		
+		
+		case OBJET_ATTRIBUT: {
+			id = getId(uri);
+			if (id < 0) {
+				return db
+						.query(TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_OBJET_ATTRIBUT,
+								projection, selection, selectionArgs, null,
+								null, sortOrder);
+			} else {
+				return db
+						.query(TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_OBJET_ATTRIBUT,
+								projection, Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID + "="
+										+ id, null, null, null, null);
+			}
+		}
+		
 		case CHILD_OBJET: {
 			
 				return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+"=? ", selectionArgs);	
 		}
 		
+		case MAX_OBJET: {
+			
+			return db.rawQuery("select max(o."+Objet.OBJET_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+"", null);	
+	}
+	
+       case MAX_ATTRIBUT: {
+			
+			return db.rawQuery("select max(o."+Attribut.ATTRIBUT_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+"", null);	
+	}
+       case MAX_FINAL: {
+			
+			return db.rawQuery("select max(o."+Final.FINAL_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_FINAL+"", null);	
+	}
 		default:
 			return null;
 		}
