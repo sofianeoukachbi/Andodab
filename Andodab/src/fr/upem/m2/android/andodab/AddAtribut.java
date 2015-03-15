@@ -1,7 +1,11 @@
 package fr.upem.m2.android.andodab;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import fr.upem.m2.android.andodab.DAO.BddOperations;
+import fr.upem.m2.android.andodab.beans.Bdd_bean;
+import fr.upem.m2.android.andodab.beans.Primitif_bean;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,14 +25,15 @@ public class AddAtribut extends Activity {
 	private TextView valueLbl,objetLbl,primitifLbl;
 	private EditText valueAttrib,nomAttrib;
 	private String attribFinalValue;
-	//test
-	
-	
+	private BddOperations db;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_atribut);
 		
+		db = new BddOperations(this);
+
 		attribType = (Spinner) findViewById(R.id.attribType);
 		objectList = (Spinner) findViewById(R.id.objectAttrib);
 		primitfList = (Spinner) findViewById(R.id.primitifAttrib);
@@ -40,8 +45,7 @@ public class AddAtribut extends Activity {
 		valueAttrib = (EditText) findViewById(R.id.attribValueTxt);
 		nomAttrib = (EditText) findViewById(R.id.nameAttributTxt);
 		
-		
-		 
+				 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 		        R.array.type_attribut, android.R.layout.simple_spinner_item);
 		 
@@ -66,7 +70,8 @@ public class AddAtribut extends Activity {
 		});
 		
 		
-		String db = getIntent().getStringExtra("db");
+		String db_name = getIntent().getStringExtra("db");
+		int db_id = getIntent().getIntExtra("db_id", 0);
 		//alimenter la liste des objets selon la db selectionné
 		//appel fonction qui retourne les objet de la base
 		ArrayList<String> listObjetDb = new ArrayList<String>();
@@ -77,8 +82,15 @@ public class AddAtribut extends Activity {
 		ArrayAdapter<String> objectListAdaper = new ArrayAdapter<String>(AddAtribut.this,android.R.layout.simple_spinner_item,listObjetDb);
 		objectListAdaper.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		objectList.setAdapter(objectListAdaper);	
+		 
+		 List<Primitif_bean> listPrimitif = db.getListPrimitif();
+  
+		ArrayAdapter<Primitif_bean> primitifAdapter = new ArrayAdapter<Primitif_bean>(AddAtribut.this,android.R.layout.simple_spinner_item,listPrimitif);
+		primitifAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		primitfList.setAdapter(primitifAdapter);		    
+		primitfList.setSelection(primitfList.getSelectedItemPosition(), false);
 		
-		
+	 
 	}
 
 	@Override

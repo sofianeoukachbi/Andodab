@@ -37,6 +37,11 @@ public class Primitif_bean {
 	public void setPrimitif_name(String primitif_name) {
 		this.primitif_name = primitif_name;
 	}
+
+	@Override
+	public String toString() {
+		return  primitif_name ;
+	}
 	
 	
 }
