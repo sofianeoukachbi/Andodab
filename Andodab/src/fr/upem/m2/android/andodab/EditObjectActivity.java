@@ -45,33 +45,42 @@ import android.widget.Toast;
 		initEventView();
 	}
 	
+	/**
+	 * recupere les objet du layout
+	 */
 	public void initView() {
 		sp_db = (Spinner) findViewById(R.id.id_spinner_base);
 		btn_delete = (Button) findViewById(R.id.id_btn_delete_ob);
 		btn_modif = (Button) findViewById(R.id.id_btn_modif_ob);
 		sp_object = (Spinner) findViewById(R.id.id_spinner_object);
-		
+		/**
+		 * recupere la liste des Bd
+		 */
 		List<Bdd_bean> lis = bddo.getListBdd();
 		list_BD = new ArrayList<Bdd_bean>();
 		for (Bdd_bean b : lis) {
 			list_BD.add(b);
 		Toast.makeText(EditObjectActivity.this, b.getBdd_name(), Toast.LENGTH_SHORT).show();
 		}
-//		list_BD.add("DB1");
-//		list_BD.add("DB2");
-//		list_BD.add(0,"");
+
 		ArrayAdapter<Bdd_bean> dbNameAdapter = new ArrayAdapter<Bdd_bean>(EditObjectActivity.this,android.R.layout.simple_spinner_item,list_BD);
 		dbNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_db.setAdapter(dbNameAdapter);		    
 		sp_db.setSelection(sp_db.getSelectedItemPosition(), false);
 	}
 	
+	/**
+	 * initier les vues
+	 */
 	public void initEventView() {
 		sp_db.setOnItemSelectedListener(bd_selected);
 		btn_delete.setOnClickListener( btn_delete_click);
 		btn_modif.setOnClickListener( btn_modif_click);
 	}
 	
+	/**
+	 * lorsqu'on clique sur suprimer
+	 */
 	private android.view.View.OnClickListener btn_delete_click = new View.OnClickListener() {
 
 		
@@ -84,11 +93,17 @@ import android.widget.Toast;
 
 		
 	};
+	/**
+	 * lorsqu'on clique sur modifier
+	 */
 private android.view.View.OnClickListener btn_modif_click = new View.OnClickListener() {
 
 		
 		@Override
 		public void onClick(View v) {
+			/**
+			 * aller à l'activité EditValueObjectActivity
+			 */
 			Intent intent = new Intent(getApplicationContext(),	EditValueObjectActivity.class);
 			startActivity(intent);
 
@@ -99,7 +114,9 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 
 	
 	
-	
+	/**
+	 * lorsque la base de donnée est selectionée
+	 */
 	private OnItemSelectedListener bd_selected = new OnItemSelectedListener() {
 
 		@Override
@@ -113,13 +130,8 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 			{
 				list_object.add(o);
 			}
-//			list_object.add("Aucun");
-//			list_object.add("objet 1");
-//			list_object.add("objet 2");
-//			list_object.add("objet 3");
-			
-			//parentList.removeAllViews();
-			ArrayAdapter<Objet_bean> adapter = new ArrayAdapter<Objet_bean>(getApplicationContext(),android.R.layout.simple_spinner_item,list_object);
+
+			ArrayAdapter<Objet_bean> adapter = new ArrayAdapter<Objet_bean>(EditObjectActivity.this,android.R.layout.simple_spinner_item,list_object);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			sp_object.setAdapter(adapter);	
 			
@@ -133,7 +145,9 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 	};
 	
 
-	
+	/**
+	 * creer le dialogue de suppression d'objets
+	 */
 	  @Override
 	  public Dialog onCreateDialog (int id) {
 		  Dialog dialog;
