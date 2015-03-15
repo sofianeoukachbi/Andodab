@@ -105,6 +105,7 @@ public class BddOperations {
 		valeur.clear();
 		valeur.put(Valeur.OBJET_TYPE_ID, objet.getObjet_id());
 		valeur.put(Valeur.OBJET_ID, objet_id);
+		valeur.put(Valeur.ATTRIBUT_ID, max);
 		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,attribut);
 		
 	}
