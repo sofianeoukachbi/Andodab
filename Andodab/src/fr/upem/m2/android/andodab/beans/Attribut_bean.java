@@ -3,6 +3,7 @@ package fr.upem.m2.android.andodab.beans;
 public class Attribut_bean {
 	private Integer attribut_id;
 	private String attribut_name;
+	
 	public Attribut_bean() {
 		super();
 		// TODO Auto-generated constructor stub

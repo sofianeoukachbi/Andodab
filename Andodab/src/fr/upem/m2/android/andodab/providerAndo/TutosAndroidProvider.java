@@ -1,6 +1,6 @@
-package fr.upem.m2.android.andodab.provider;
+package fr.upem.m2.android.andodab.providerAndo;
 
-import fr.upem.m2.android.andodab.provider.SharedInformation.*;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.*;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -257,8 +257,8 @@ public class TutosAndroidProvider extends ContentProvider {
 			db.execSQL("CREATE TABLE "
 					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_OBJET_ATTRIBUT
 					+ " (" + Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID
-					+ " INTEGER PRIMARY KEY ,"
-					+ Objet_Attribut.OBJET_ATTRIBUT_OBJET_ID  + "INTEGER ,"
+					+ " INTEGER  ,"
+					+ Objet_Attribut.OBJET_ATTRIBUT_OBJET_ID  + " INTEGER ,"
 		            +"primary key ("+Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID+","+Objet_Attribut.OBJET_ATTRIBUT_OBJET_ID+"),"				
 					+ "FOREIGN KEY(" + Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID
 					+ ") REFERENCES "

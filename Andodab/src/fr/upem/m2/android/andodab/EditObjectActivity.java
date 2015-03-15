@@ -1,6 +1,11 @@
 package fr.upem.m2.android.andodab;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import fr.upem.m2.android.andodab.DAO.BddOperations;
+import fr.upem.m2.android.andodab.beans.Bdd_bean;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 //import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 @SuppressLint("NewApi") public class EditObjectActivity extends Activity {
 	private ArrayList<String> list_BD;
@@ -26,6 +32,7 @@ import android.widget.Spinner;
 	private String selected_bd;
 	private Button btn_delete;
 	private Button btn_modif;
+	private BddOperations bddo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +48,13 @@ import android.widget.Spinner;
 		btn_delete = (Button) findViewById(R.id.id_btn_delete_ob);
 		btn_modif = (Button) findViewById(R.id.id_btn_modif_ob);
 		sp_object = (Spinner) findViewById(R.id.id_spinner_object);
+		bddo = new BddOperations(this);
+		List<Bdd_bean> lis = bddo.getListBdd();
 		list_BD = new ArrayList<String>();
+		for (Bdd_bean b : lis) {
+			list_BD.add(b.getBdd_name());
+		Toast.makeText(EditObjectActivity.this, b.getBdd_name(), Toast.LENGTH_SHORT).show();
+		}
 		list_BD.add("DB1");
 		list_BD.add("DB2");
 		list_BD.add(0,"");
@@ -118,9 +131,10 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 		  Dialog dialog;
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			 
-				builder.setMessage("Voulez-vous supprimer le sms ?");
+				builder.setMessage("Voulez-vous supprimer l'objets ?");
 				builder.setCancelable(false);
-				builder.setTitle("Confirmation");
+				builder.setTitle("Suppression");
+				builder.setIcon(getResources().getDrawable(R.drawable.choix));
 				builder.setPositiveButton("oui", new DialogInterface.OnClickListener() {					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -141,12 +155,12 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 				
 	  }
 	  
-	  @Override
-	  public void onPrepareDialog (int id, Dialog box) {
-	  
-	      box.setTitle("suppression de !"+id);
-	     //On ne s'intéresse pas au cas où l'identifiant vaut 1, puisque cette boîte affiche le même texte à chaque lancement
-	  }
+//	  @Override
+//	  public void onPrepareDialog (int id, Dialog box) {
+//	  
+//	      box.setTitle("suppression de !"+id);
+//	     //On ne s'intéresse pas au cas où l'identifiant vaut 1, puisque cette boîte affiche le même texte à chaque lancement
+//	  }
 		
 	
 						

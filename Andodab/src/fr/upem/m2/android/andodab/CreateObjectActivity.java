@@ -24,14 +24,15 @@ import fr.upem.m2.android.andodab.beans.Bdd_bean;
 public class CreateObjectActivity extends Activity {
 	
 	private ArrayList<String> listObjets;
-	private ArrayList<String> dbList;
+	private List<Bdd_bean> dbList;
 	private Spinner dbNameSpinner;
 	private Spinner parentList;
 	private ListView attributList;
 	private Button annulerCreation,validerCreation,ajouterAttribut;
 	private ArrayList<String> attribItemList;
 	private ArrayAdapter<String> listAdapter;
-	private String selectedDB=null;
+	private String selectedDBname;
+	private int selectedDBid;
 	private int selectedAttrib=-1;
 	private BddOperations db;
 	 
@@ -52,20 +53,10 @@ public class CreateObjectActivity extends Activity {
 						
 		
 		//Appel methode qui retourne le nom des base de donné existant
-		dbList = new ArrayList<String>();
-		
-		List<Bdd_bean> gg = db.getListBdd();
-		Log.v("aaaa", "taille"+gg.size());
-		
-		
-		dbList.add("DB1");
-		dbList.add("DB2");
-		dbList.add(0,"");
-		//ArrayList<Bdd_bean> gg = new ArrayList<Bdd_bean>();
-		gg.add(new Bdd_bean("dd"));
-		gg.add(new Bdd_bean("ff"));
-		ArrayAdapter<String> dbNameAdapter = new ArrayAdapter<String>(CreateObjectActivity.this,android.R.layout.simple_spinner_item,dbList);
-		//ArrayAdapter<Bdd_bean> dbNameAdapter = new ArrayAdapter<Bdd_bean>(CreateObjectActivity.this,android.R.layout.simple_spinner_item,gg);
+		 
+		dbList = db.getListBdd();
+	 
+		ArrayAdapter<Bdd_bean> dbNameAdapter = new ArrayAdapter<Bdd_bean>(CreateObjectActivity.this,android.R.layout.simple_spinner_item,dbList);
 		dbNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		dbNameSpinner.setAdapter(dbNameAdapter);		    
 		dbNameSpinner.setSelection(dbNameSpinner.getSelectedItemPosition(), false);
@@ -74,8 +65,8 @@ public class CreateObjectActivity extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				selectedDB = dbList.get(position);
-								
+				selectedDBname = dbList.get(position).getBdd_name();
+				selectedDBid = 	dbList.get(position).getBdd_id();			
 				//Appel methode qui retourne les objets de la base selectionné
 				//....
 				//liste retourné
@@ -173,7 +164,10 @@ public class CreateObjectActivity extends Activity {
 	public void doAddAttribut(View v){
 		
 		Intent intent  = new Intent(getApplicationContext(),AddAtribut.class);
-		intent.putExtra("db", selectedDB);
+		Log.v("class", selectedDBname);
+		Log.v("class", ""+ selectedDBid);
+		intent.putExtra("db", selectedDBname);
+		intent.putExtra("db_id", selectedDBid);
 		startActivityForResult(intent, 0);		
 	}
 
@@ -188,8 +182,6 @@ public class CreateObjectActivity extends Activity {
 	        listAdapter.notifyDataSetChanged();
 	      
 	      }
-		
-		
 	}
 	 
 	

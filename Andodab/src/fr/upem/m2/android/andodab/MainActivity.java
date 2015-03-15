@@ -3,6 +3,10 @@ package fr.upem.m2.android.andodab;
 
 
 import java.net.URL;
+import java.util.List;
+
+import fr.upem.m2.android.andodab.DAO.BddOperations;
+import fr.upem.m2.android.andodab.beans.Bdd_bean;
 
 
 import android.R.color;
@@ -14,10 +18,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,6 +34,7 @@ public class MainActivity extends Activity {
 	private Button creerObjetBtn;
 	private Button editionObjetBtn;
 	private Spinner listBdd;
+	private BddOperations bddo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.accueil);
 		
 	
-		
+		bddo = new BddOperations(this);
 		initView();
 		initEventView();
 	}
@@ -74,13 +81,14 @@ public class MainActivity extends Activity {
 		//On donne un titre à l'AlertDialog
         adb.setTitle("Choix de la BDD");
         
-        adb.setIcon(android.R.drawable.ic_dialog_alert);
+        adb.setIcon(getResources().getDrawable(R.drawable.choix));
         
         //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
  
         adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
  
+
 //            	//Lorsque l'on cliquera sur le bouton "OK", on récupère l'EditText correspondant à notre vue personnalisée (cad à alertDialogView)
 //            	EditText et = (EditText)alertDialogView.findViewById(R.id.EditText1);
 // 
@@ -93,6 +101,7 @@ public class MainActivity extends Activity {
         				ConsultObjectsActivity.class);
         		startActivity(intent);
         		
+
           } });
         
 
@@ -131,14 +140,23 @@ public class MainActivity extends Activity {
 		
 				adb.setView(alertDialogView);
 				adb.setTitle("Création d'une base");        
-		        adb.setIcon(android.R.drawable.ic_dialog_alert);
+				adb.setIcon(getResources().getDrawable(R.drawable.choix));
 		        
+				
 //		action a faire en cliquant sur le bouton ok 
 		        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog, int which) {
-		
-//	    création de la base contacter le DAO
-		            	Toast.makeText(MainActivity.this, "okiii", Toast.LENGTH_SHORT).show();
+		            	
+		            	EditText ed = (EditText)findViewById(R.id.editText1);
+		            	
+		            	bddo.CreateBdd("adembddtestttttttt");
+		            	
+		            	List<Bdd_bean> bddList = bddo.getListBdd();
+		            	
+		            	for (Bdd_bean b : bddList){
+	            			Log.v("bdd", b.getBdd_name());
+	            		}
+		            	
 		          } });
 
 		 
