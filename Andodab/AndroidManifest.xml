@@ -44,12 +44,9 @@
         <provider
             android:name="fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider"
  
+ 
             android:authorities="fr.upem.m2.android.andodab.provider" />
-
-        <activity
-            android:name=".ConsultObjectsActivity"
-            android:label="@string/title_activity_consult_objects" >
-        </activity>
+ 
     </application>
 
 </manifest>
