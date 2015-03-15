@@ -118,9 +118,10 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 		  Dialog dialog;
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			 
-				builder.setMessage("Voulez-vous supprimer le sms ?");
+				builder.setMessage("Voulez-vous supprimer l'objets ?");
 				builder.setCancelable(false);
-				builder.setTitle("Confirmation");
+				builder.setTitle("Suppression");
+				builder.setIcon(getResources().getDrawable(R.drawable.choix));
 				builder.setPositiveButton("oui", new DialogInterface.OnClickListener() {					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -141,12 +142,12 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 				
 	  }
 	  
-	  @Override
-	  public void onPrepareDialog (int id, Dialog box) {
-	  
-	      box.setTitle("suppression de !"+id);
-	     //On ne s'intéresse pas au cas où l'identifiant vaut 1, puisque cette boîte affiche le même texte à chaque lancement
-	  }
+//	  @Override
+//	  public void onPrepareDialog (int id, Dialog box) {
+//	  
+//	      box.setTitle("suppression de !"+id);
+//	     //On ne s'intéresse pas au cas où l'identifiant vaut 1, puisque cette boîte affiche le même texte à chaque lancement
+//	  }
 		
 	
 						
