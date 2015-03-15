@@ -1020,7 +1020,7 @@ public class TutosAndroidProvider extends ContentProvider {
      
        case OBJET_RACINE: {
 			
-			return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+"=null", null);	
+			return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_BDD_ID+" is null and "+Objet.OBJET_ID_OBJET+"=?", null);	
 	}
       
        
