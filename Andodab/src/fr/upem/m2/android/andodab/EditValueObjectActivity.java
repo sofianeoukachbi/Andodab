@@ -1,6 +1,7 @@
 package fr.upem.m2.android.andodab;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.upem.m2.android.andodab.DAO.BddOperations;
 
@@ -25,6 +26,7 @@ public class EditValueObjectActivity extends Activity {
 	Button btOk;
 	Button btno;
 	private BddOperations bddo;
+	List<String> list = new ArrayList<String>();
 	
 	
 	@Override
@@ -41,39 +43,82 @@ public class EditValueObjectActivity extends Activity {
 	        LayoutParams linLayoutParam = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
 	        // set LinearLayout as a root element of the screen 
 	        setContentView(linLayout, linLayoutParam);
-	        
-	        //debut de la boucle pour ajouter les attributs
-	        LinearLayout firstLayout = new LinearLayout(this);
-	        // specifying vertical orientation
-	        firstLayout.setOrientation(LinearLayout.HORIZONTAL);
+	        list.add("1");
+	        list.add("2");
 	        LayoutParams firstParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
-	        firstLayout.setLayoutParams(firstParam);    
+	        LayoutParams lpView = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+ 	         
+	        for(String l: list)
+	        {
+	        	if(l.equals("1"))
+	        	{
+	        	 LinearLayout firstLayout = new LinearLayout(this);
+	 	        // specifying vertical orientation
+	 	        firstLayout.setOrientation(LinearLayout.HORIZONTAL);
+	 	       firstLayout.setLayoutParams(firstParam); 
+	 	        
+	 	        	        
+	 	        TextView tv = new TextView(this);
+	 	        tv.setText("nom de l'attribut");
+	 	        tv.setLayoutParams(lpView);
+	 	        firstLayout.addView(tv);	        
+	 	        EditText et = new EditText(this);
+	 	        et.setText("sf");
+	 	        et.setLayoutParams(lpView);
+	 	        firstLayout.addView(et, lpView);
+	 	       linLayout.addView(firstLayout);
+	        	}else{
+	        		
+	        	    LinearLayout secondLayout = new LinearLayout(this);
+	    	        secondLayout.setOrientation(LinearLayout.HORIZONTAL);	       
+	    	        secondLayout.setLayoutParams(firstParam);  
+	    	        TextView tv1 = new TextView(this);
+	    	        tv1.setText("nom de l'attribut");
+	    	        tv1.setLayoutParams(lpView);
+	    	        secondLayout.addView(tv1);	        
+	    	        EditText et1 = new EditText(this);
+	    	        et1.setText("te");
+	    	        secondLayout.addView(et1, lpView);
+	    	        EditText et2 = new EditText(this);
+	    	        et2.setText("te2");
+	    	        secondLayout.addView(et2, lpView);
+	    	        linLayout.addView(secondLayout);
+	        		
+	        	}
+	        }
 	        
-	        LayoutParams lpView = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);	        
-	        TextView tv = new TextView(this);
-	        tv.setText("nom de l'attribut");
-	        tv.setLayoutParams(lpView);
-	        firstLayout.addView(tv);	        
-	        EditText et = new EditText(this);
-	        et.setText("sf");
-	        et.setLayoutParams(lpView);
-	        firstLayout.addView(et, lpView);
-	        
-	        // second layout
-	        LinearLayout secondLayout = new LinearLayout(this);
-	        secondLayout.setOrientation(LinearLayout.HORIZONTAL);	       
-	        secondLayout.setLayoutParams(firstParam);  
-	        TextView tv1 = new TextView(this);
-	        tv1.setText("nom de l'attribut");
-	        tv1.setLayoutParams(lpView);
-	        secondLayout.addView(tv1);	        
-	        EditText et1 = new EditText(this);
-	        et1.setText("te");
-	        secondLayout.addView(et1, lpView);
-	        EditText et2 = new EditText(this);
-	        et2.setText("te2");
-	        secondLayout.addView(et2, lpView);
-	        
+//	        //debut de la boucle pour ajouter les attributs
+//	        LinearLayout firstLayout = new LinearLayout(this);
+//	        // specifying vertical orientation
+//	        firstLayout.setOrientation(LinearLayout.HORIZONTAL);
+//	        LayoutParams firstParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
+//	        firstLayout.setLayoutParams(firstParam);    
+//	        
+//	        LayoutParams lpView = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);	        
+//	        TextView tv = new TextView(this);
+//	        tv.setText("nom de l'attribut");
+//	        tv.setLayoutParams(lpView);
+//	        firstLayout.addView(tv);	        
+//	        EditText et = new EditText(this);
+//	        et.setText("sf");
+//	        et.setLayoutParams(lpView);
+//	        firstLayout.addView(et, lpView);
+//	        
+//	        // second layout
+//	        LinearLayout secondLayout = new LinearLayout(this);
+//	        secondLayout.setOrientation(LinearLayout.HORIZONTAL);	       
+//	        secondLayout.setLayoutParams(firstParam);  
+//	        TextView tv1 = new TextView(this);
+//	        tv1.setText("nom de l'attribut");
+//	        tv1.setLayoutParams(lpView);
+//	        secondLayout.addView(tv1);	        
+//	        EditText et1 = new EditText(this);
+//	        et1.setText("te");
+//	        secondLayout.addView(et1, lpView);
+//	        EditText et2 = new EditText(this);
+//	        et2.setText("te2");
+//	        secondLayout.addView(et2, lpView);
+//	        
 	        
 	        //fin de la boucle
 	        
@@ -117,8 +162,8 @@ public class EditValueObjectActivity extends Activity {
 	       
 	      
 	        //ajout des layout ds le layout principal
-	        linLayout.addView(firstLayout);
-	        linLayout.addView(secondLayout);
+	   
+	      
 	        linLayout.addView(buttonLayout);
 	        
 	        
