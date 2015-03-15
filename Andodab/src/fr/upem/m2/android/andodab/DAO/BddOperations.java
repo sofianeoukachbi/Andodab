@@ -3,7 +3,6 @@ package fr.upem.m2.android.andodab.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.upem.m2.android.andodab.ContentProviderExempleActivity;
 import fr.upem.m2.android.andodab.beans.Attribut_bean;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
 import fr.upem.m2.android.andodab.beans.Objet_bean;
@@ -65,8 +64,10 @@ public class BddOperations {
 		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
 		
 		if (curTest.moveToFirst()) {
-			do {	
-				bean=new Bdd_bean();		
+
+			do {			
+				bean=new Bdd_bean();	
+
 				bean.setBdd_id(curTest.getInt(curTest.getColumnIndex(Bdd.BDD_ID)));
 				bean.setBdd_name(curTest.getString(curTest.getColumnIndex(Bdd.BDD_NAME)));
 				liste.add(bean);
