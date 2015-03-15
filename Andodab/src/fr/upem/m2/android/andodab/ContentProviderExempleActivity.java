@@ -6,9 +6,9 @@ package fr.upem.m2.android.andodab;
 
 import fr.upem.m2.android.andodab.R;
 import fr.upem.m2.android.andodab.DAO.BddOperations;
-import fr.upem.m2.android.andodab.provider.SharedInformation.Primitif;
-import fr.upem.m2.android.andodab.provider.TutosAndroidProvider;
-import fr.upem.m2.android.andodab.provider.SharedInformation.Bdd;
+import fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Bdd;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Primitif;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
