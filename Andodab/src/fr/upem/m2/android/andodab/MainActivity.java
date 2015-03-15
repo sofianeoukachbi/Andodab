@@ -135,7 +135,7 @@ public class MainActivity extends Activity {
 		            	
 		            	EditText ed = (EditText)findViewById(R.id.editText1);
 		            	
-		            	//bddo.CreateBdd("adembddtest");
+		            	bddo.CreateBdd("adembddtest");
 		            	
 		            	List<Bdd_bean> bddList = bddo.getListBdd();
 		            	

@@ -30,7 +30,7 @@ public class Bdd_bean {
 
 	@Override
 	public String toString() {
-		return " bdd_name";
+		return  bdd_name;
 	}
 	
 	
