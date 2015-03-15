@@ -43,6 +43,8 @@ public class ContentProviderExempleActivity extends Activity {
 //				Toast.LENGTH_LONG).show();
 		
 		
+		
+		
 		String columnsTest[] = new String[] { Bdd.BDD_ID,Bdd.BDD_NAME };
 		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_BDD;
 		Cursor curTest = managedQuery(mContactsTest, columnsTest, null, null, null);

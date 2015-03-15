@@ -4,7 +4,8 @@ public class Final_bean {
 
 	
 	private Integer final_id;
-	
+	private String final_val;
+	private Integer final_primitif_id;
 	
 	public Final_bean() {
 		// TODO Auto-generated constructor stub
@@ -17,7 +18,22 @@ public class Final_bean {
 		this.final_id = final_id;
 	}
 
+	
+	public Integer getFinal_primitif_id() {
+		return final_primitif_id;
+	}
+	
+	public void setFinal_primitif_id(Integer final_primitif_id) {
+		this.final_primitif_id = final_primitif_id;
+	}
+	
+public String getFinal_val() {
+	return final_val;
+}
 
+public void setFinal_val(String final_val) {
+	this.final_val = final_val;
+}
 
 	public Integer getFinal_id() {
 		return final_id;

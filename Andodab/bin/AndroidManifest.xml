@@ -17,12 +17,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name" >
  
-             <intent-filter>
- 
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+             
         </activity>
         <activity
             android:name=".CreateObjectActivity"
@@ -37,11 +32,17 @@
         <activity android:name=".EditValueObjectActivity" >
         </activity>
         <activity android:name=".ContentProviderExempleActivity" >
+                <intent-filter>
+ 
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
            
         </activity>
             <activity android:name=".ConsultObjectsActivity" >
 
+                
            
         </activity>
 

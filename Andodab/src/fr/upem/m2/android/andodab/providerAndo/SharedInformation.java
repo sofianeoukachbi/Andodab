@@ -61,6 +61,8 @@ public class SharedInformation {
 		}
 
 		public static final String FINAL_ID = "FINAL_ID";
+		public static final String FINAL_VAL = "FINAL_VAL";
+		public static final String FINAL_PRIMITIF_ID = "FINAL_PRIMITIF_ID";
 	}
 	
 	public static final class FinalInt implements BaseColumns {

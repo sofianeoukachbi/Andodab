@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.upem.m2.android.andodab.beans.Attribut_bean;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
+import fr.upem.m2.android.andodab.beans.Final_bean;
 import fr.upem.m2.android.andodab.beans.Objet_bean;
 import fr.upem.m2.android.andodab.beans.Primitif_bean;
 import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Valeur;
@@ -110,6 +111,79 @@ public class BddOperations {
 		
 	}
 	
+	
+	public void addPrimitifToObjet(Integer objet_id, String attributName, Primitif_bean primitif  ){
+		///creation de l'attribut
+		ContentValues attribut=new ContentValues();
+		attribut.clear();
+		attribut.put(Attribut.ATTRIBUT_NAME, attributName);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_ATTRIBUT,attribut);
+		
+		///recuperer l id de l'attribut
+		String columnsTest[] = new String[] {"id_max"};
+		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_MAXATTRIBUT;
+        Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
+		
+        Integer max=null;
+        
+		if (curTest.moveToFirst()) {
+            
+			do {				
+
+				max=curTest.getInt(curTest.getColumnIndex("id_max"));
+				
+				
+			} while (curTest.moveToNext());
+		
+		}
+		
+		
+		ContentValues valeur=new ContentValues();
+		valeur.clear();
+		valeur.put(Valeur.PRIMITIF_ID, primitif.getPrimitif_id());
+		valeur.put(Valeur.OBJET_ID, objet_id);
+		valeur.put(Valeur.ATTRIBUT_ID, max);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,attribut);
+		
+	}
+	
+	
+//	public void addFinalToObjet(Integer objet_id, String attributName, Final_bean final_b  ){
+//		///creation de l'attribut
+//		ContentValues attribut=new ContentValues();
+//		attribut.clear();
+//		attribut.put(Attribut.ATTRIBUT_NAME, attributName);
+//		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_ATTRIBUT,attribut);
+//		
+//		///recuperer l id de l'attribut
+//		String columnsTest[] = new String[] {"id_max"};
+//		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_MAXATTRIBUT;
+//        Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
+//		
+//        Integer max=null;
+//        
+//		if (curTest.moveToFirst()) {
+//            
+//			do {				
+//
+//				max=curTest.getInt(curTest.getColumnIndex("id_max"));
+//				
+//				
+//			} while (curTest.moveToNext());
+//		
+//		}
+//		
+//		
+//		ContentValues valeur=new ContentValues();
+//		valeur.clear();
+//		valeur.put(Valeur., primitif.getPrimitif_id());
+//		valeur.put(Valeur.OBJET_ID, objet_id);
+//		valeur.put(Valeur.ATTRIBUT_ID, max);
+//		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_FINAL,attribut);
+//		
+//	}
+	
+	
 	public List<Bdd_bean> getListBdd(){
 		Bdd_bean bean;
 		List<Bdd_bean> liste=new ArrayList<Bdd_bean>();
@@ -188,21 +262,21 @@ public class BddOperations {
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
 		Objet_bean bean;
 		String columnsTest[] = new String[] { Objet.OBJET_ID,Objet.OBJET_NAME,Objet.OBJET_ID_OBJET,Objet.OBJET_SEALED,Objet.OBJET_BDD_ID };
-		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJET;
+		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJETRACINE;
 		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
 		
 		if (curTest.moveToFirst()) {
 			do {	
 				bean=new Objet_bean();
-				bean = new Objet_bean();
+				
 				bean.setObjet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID)));
 				bean.setObjet_nom(curTest.getString(curTest.getColumnIndex(Objet.OBJET_NAME)));
 				bean.setObjet_objet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID_OBJET)));
 				bean.setObjet_sealed(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_SEALED)));
 				bean.setObjet_bdd_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_BDD_ID)));			
 				
-				if((bean.getObjet_bdd_id().equals(null))&&(bean.getObjet_bdd_id()!=bdd_id)){	
-				liste.add(bean);}
+					
+				liste.add(bean);
 				
 			} while (curTest.moveToNext());
 		}
