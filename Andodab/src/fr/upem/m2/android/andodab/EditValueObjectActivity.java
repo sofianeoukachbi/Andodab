@@ -47,6 +47,9 @@ public class EditValueObjectActivity extends Activity {
 	        list.add("2");
 	        LayoutParams firstParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
 	        LayoutParams lpView = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+	        lpView.width=120;
+	        lpView.height=80;
+	        lpView.topMargin=50;
  	         
 	        for(String l: list)
 	        {
@@ -61,7 +64,7 @@ public class EditValueObjectActivity extends Activity {
 	 	        TextView tv = new TextView(this);
 	 	        tv.setText("nom de l'attribut");
 	 	        tv.setLayoutParams(lpView);
-	 	        firstLayout.addView(tv);	        
+	 	        firstLayout.addView(tv,lpView);	        
 	 	        EditText et = new EditText(this);
 	 	        et.setText("sf");
 	 	        et.setLayoutParams(lpView);
@@ -75,7 +78,7 @@ public class EditValueObjectActivity extends Activity {
 	    	        TextView tv1 = new TextView(this);
 	    	        tv1.setText("nom de l'attribut");
 	    	        tv1.setLayoutParams(lpView);
-	    	        secondLayout.addView(tv1);	        
+	    	        secondLayout.addView(tv1,lpView);	        
 	    	        EditText et1 = new EditText(this);
 	    	        et1.setText("te");
 	    	        secondLayout.addView(et1, lpView);
@@ -128,10 +131,19 @@ public class EditValueObjectActivity extends Activity {
 	        buttonLayout.setLayoutParams(firstParam);
 	        LinearLayout.LayoutParams rightGravityParams = new LinearLayout.LayoutParams(
 	                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+	        rightGravityParams.leftMargin=50;
+//	        rightGravityParams.rightMargin=20;
+//	        rightGravityParams.topMargin=50;
+	        rightGravityParams.width=190;
+	        rightGravityParams.height=80;
 	        rightGravityParams.gravity = Gravity.END;
 	        LinearLayout.LayoutParams leftGravityParams = new LinearLayout.LayoutParams(
 	                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-	        rightGravityParams.gravity = Gravity.START;
+//	        leftGravityParams.gravity = Gravity.START;
+//	        leftGravityParams.topMargin=50;
+	        leftGravityParams.leftMargin=20;
+	        leftGravityParams.width=190;
+	        leftGravityParams.height=80;
 	        
 	         btOk = new Button(this);
 	        btOk.setText("Ok");
@@ -141,8 +153,8 @@ public class EditValueObjectActivity extends Activity {
 	        Drawable imgn = getBaseContext().getResources().getDrawable( R.drawable.ok );
 	        imgn.setBounds( 0, 0, 60, 60 );
 	        btOk.setCompoundDrawables( imgn, null, null, null );
-	        btOk.setWidth(RESULT_OK);
-	        btOk.setHeight(RESULT_OK);
+//	        btOk.setWidth(RESULT_OK);
+//	        btOk.setHeight(RESULT_OK);
 
 	        
 	        
