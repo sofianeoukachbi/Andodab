@@ -27,6 +27,11 @@ public class Bdd_bean {
 	public void setBdd_name(String bdd_name) {
 		this.bdd_name = bdd_name;
 	}
+
+	@Override
+	public String toString() {
+		return   bdd_name  ;
+	}
 	
 	
 

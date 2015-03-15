@@ -1,7 +1,10 @@
 package fr.upem.m2.android.andodab;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import fr.upem.m2.android.andodab.DAO.BddOperations;
+import fr.upem.m2.android.andodab.beans.Bdd_bean;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import fr.upem.m2.android.andodab.beans.Bdd_bean;
 
 public class CreateObjectActivity extends Activity {
 	
@@ -29,12 +33,15 @@ public class CreateObjectActivity extends Activity {
 	private ArrayAdapter<String> listAdapter;
 	private String selectedDB=null;
 	private int selectedAttrib=-1;
+	private BddOperations db;
 	 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_object);
+		
+		db = new BddOperations(this);
 		
 		dbNameSpinner = (Spinner) findViewById(R.id.dbName);
 		attributList =  (ListView) findViewById(R.id.attributList);
@@ -46,10 +53,19 @@ public class CreateObjectActivity extends Activity {
 		
 		//Appel methode qui retourne le nom des base de donné existant
 		dbList = new ArrayList<String>();
+		
+		List<Bdd_bean> gg = db.getListBdd();
+		Log.v("aaaa", "taille"+gg.size());
+		
+		
 		dbList.add("DB1");
 		dbList.add("DB2");
 		dbList.add(0,"");
+		//ArrayList<Bdd_bean> gg = new ArrayList<Bdd_bean>();
+		gg.add(new Bdd_bean("dd"));
+		gg.add(new Bdd_bean("ff"));
 		ArrayAdapter<String> dbNameAdapter = new ArrayAdapter<String>(CreateObjectActivity.this,android.R.layout.simple_spinner_item,dbList);
+		//ArrayAdapter<Bdd_bean> dbNameAdapter = new ArrayAdapter<Bdd_bean>(CreateObjectActivity.this,android.R.layout.simple_spinner_item,gg);
 		dbNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		dbNameSpinner.setAdapter(dbNameAdapter);		    
 		dbNameSpinner.setSelection(dbNameSpinner.getSelectedItemPosition(), false);

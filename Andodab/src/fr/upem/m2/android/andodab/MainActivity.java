@@ -86,6 +86,13 @@ public class MainActivity extends Activity {
 // 
 //            	//On affiche dans un Toast le texte contenu dans l'EditText de notre AlertDialog
             	Toast.makeText(MainActivity.this, "okiii", Toast.LENGTH_SHORT).show();
+            	
+
+
+            	Intent intent = new Intent(getApplicationContext(),
+        				ConsultObjectsActivity.class);
+        		startActivity(intent);
+        		
           } });
         
 
