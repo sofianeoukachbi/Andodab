@@ -15,6 +15,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,9 +33,12 @@ import android.widget.Toast;
 	private Spinner sp_db;
 	private Spinner sp_object;
 	private Bdd_bean selected_bd;
+	private Objet_bean selected_ob;
 	private Button btn_delete;
 	private Button btn_modif;
 	private BddOperations bddo;
+	int idB;
+	int idOb;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,7 @@ import android.widget.Toast;
 	}
 	
 	/**
-	 * recupere les objet du layout
+	 * recupere les objets du layout
 	 */
 	public void initView() {
 		sp_db = (Spinner) findViewById(R.id.id_spinner_base);
@@ -75,6 +79,7 @@ import android.widget.Toast;
 	 */
 	public void initEventView() {
 		sp_db.setOnItemSelectedListener(bd_selected);
+		sp_object.setOnItemSelectedListener(ob_selected);
 		btn_delete.setOnClickListener( btn_delete_click);
 		btn_modif.setOnClickListener( btn_modif_click);
 	}
@@ -106,6 +111,7 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 			 * aller à l'activité EditValueObjectActivity
 			 */
 			Intent intent = new Intent(getApplicationContext(),	EditValueObjectActivity.class);
+			intent.putExtra("db_id", idB);
 			startActivity(intent);
 
 		}
@@ -124,7 +130,7 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 		public void onItemSelected(AdapterView<?> parent, View view,
 				int position, long id) {
 			selected_bd = list_BD.get(position);
-			int idB = selected_bd.getBdd_id();
+			 idB = selected_bd.getBdd_id();
 			List<Objet_bean> listO = bddo.getListeObjetBDD(idB);
 			list_object = new ArrayList<Objet_bean>();
 			Log.v("listO", list_object.size()+"");
@@ -137,6 +143,25 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 			ArrayAdapter<Objet_bean> adapter = new ArrayAdapter<Objet_bean>(getApplicationContext(),android.R.layout.simple_spinner_item,list_object);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			sp_object.setAdapter(adapter);	
+			sp_object.setBackgroundColor(Color.BLACK);
+			
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	private OnItemSelectedListener ob_selected = new OnItemSelectedListener() {
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view,
+				int position, long id) {
+			selected_ob = list_object.get(position);
+			 idOb = selected_ob.getObjet_id();
+			
 			
 		}
 
@@ -163,7 +188,12 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 				builder.setPositiveButton("oui", new DialogInterface.OnClickListener() {					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
+						Objet_bean ob =(Objet_bean) sp_object.getSelectedItem();
+						Toast.makeText(EditObjectActivity.this,ob.getObjet_nom()+"", Toast.LENGTH_SHORT).show();
+						bddo = new BddOperations(EditObjectActivity.this);
+						bddo.deleteObjet(idOb);
+						
+						
 						
 					}
 				});
