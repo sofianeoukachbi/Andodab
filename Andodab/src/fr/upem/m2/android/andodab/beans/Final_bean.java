@@ -13,8 +13,7 @@ public class Final_bean {
 	
 	
 	
-	public Final_bean(Integer final_id, String final_val,
-			Integer final_primitif_id) {
+	public Final_bean(Integer final_id, String final_val,Integer final_primitif_id) {
 		 
 		this.final_id = final_id;
 		this.final_val = final_val;
@@ -29,6 +28,11 @@ public class Final_bean {
 	}
 
 	
+	
+
+
+
+
 	public Integer getFinal_primitif_id() {
 		return final_primitif_id;
 	}

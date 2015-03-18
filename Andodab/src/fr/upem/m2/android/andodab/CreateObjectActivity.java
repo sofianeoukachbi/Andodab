@@ -28,7 +28,7 @@ import fr.upem.m2.android.andodab.beans.Bdd_bean;
 
 public class CreateObjectActivity extends Activity {
 	
-	private ArrayList<String> listObjets;
+	private ArrayList<Objet_bean> listObjets;
 	private List<Bdd_bean> dbList;
 	private Spinner dbNameSpinner;
 	private Spinner parentList;
@@ -41,6 +41,7 @@ public class CreateObjectActivity extends Activity {
 	private int selectedAttrib=-1;
 	private BddOperations db;
 	private EditText objectName ;
+	private int selectedObjectIndex;
 	 
 
 	
@@ -127,14 +128,15 @@ public class CreateObjectActivity extends Activity {
 				//Appel methode qui retourne les objets de la base selectionné
 				//....
 				//liste retourné
-				listObjets = new ArrayList<String>();
-				listObjets.add("Aucun");
-				listObjets.add("objet 1");
-				listObjets.add("objet 2");
-				listObjets.add("objet 3");
-				
+			//	listObjets = new ArrayList<Objet_bean>(db.getListObjetNonFinaux());
+				listObjets = new ArrayList<Objet_bean>();
+					
+				listObjets.add(0,new Objet_bean("objet 1", null, null, 0));
+				listObjets.add(0,new Objet_bean("objet 2", null, null, 0));
+				listObjets.add(0,new Objet_bean("Aucun", 0, 0, 0));	
+				 				
 				//parentList.removeAllViews();
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,listObjets);
+				ArrayAdapter<Objet_bean> adapter = new ArrayAdapter<Objet_bean>(getApplicationContext(),android.R.layout.simple_spinner_item,listObjets);
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				parentList.setAdapter(adapter);			
 	
@@ -154,9 +156,9 @@ public class CreateObjectActivity extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				Log.v("dddd", "parent choisit");
-				Log.v("dddd", listObjets.get(position));
 				
+				selectedObjectIndex = position;
+								
 				
 			}
 
@@ -211,14 +213,27 @@ public class CreateObjectActivity extends Activity {
 	
 	
 	public void doCancelNewObject(View v){
-		Log.v("sefse", "sdssrgs");
+		Intent intent  = new Intent(getApplicationContext(),MainActivity.class);
+	 
+		startActivity(intent);	
 	}
 	
 	public void doCreateObject(View v){		
-		Log.v("sefse", "sdssrgs");
+		Objet_bean objet;
 		
-		Objet_bean objet = new Objet_bean(objectName.getText().toString(),null,null,selectedDBid);
 		
+		if(listObjets.get(selectedObjectIndex).getObjet_nom()!= "Aucun")
+		{
+			
+		 
+		objet= new Objet_bean(objectName.getText().toString(),listObjets.get(selectedObjectIndex).getObjet_id(),null,selectedDBid);
+		}
+		else
+		{
+			objet= new Objet_bean(objectName.getText().toString(),null,null,selectedDBid);
+		}
+		 
+		 
 		int objectId = db.createObjet(objet);
 		Log.v("idO", ""+objectId);
 		
@@ -231,7 +246,8 @@ public class CreateObjectActivity extends Activity {
 			
 					
 			Final_bean valeurFinal = new Final_bean(null,attrib.getValeur(), null);
-			db.addFinalToObjet(objectId, attrib.getNom(), valeurFinal);
+			int x =db.addFinalToObjet(objectId, attrib.getNom(), valeurFinal);
+			Log.v("fin", ""+x);
 			break;
 			
 		case 2:
@@ -261,7 +277,8 @@ case 3:
 			
 		}
 			
-		}		
+		}
+		
 		
 		objectName.setText("");
 		attribItemList.clear();
