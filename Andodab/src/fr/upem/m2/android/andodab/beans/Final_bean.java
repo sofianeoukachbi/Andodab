@@ -12,6 +12,7 @@ public class Final_bean {
 	}
 	
 	
+ 
 	
 	public Final_bean(Integer final_id, String final_val,Integer final_primitif_id) {
 		 
@@ -19,6 +20,7 @@ public class Final_bean {
 		this.final_val = final_val;
 		this.final_primitif_id = final_primitif_id;
 	}
+ 
 
 
 

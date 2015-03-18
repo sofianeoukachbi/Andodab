@@ -1045,7 +1045,9 @@ public class TutosAndroidProvider extends ContentProvider {
       
        case OBJET_NONFINAUX: {
 			
+
 			return db.rawQuery("select distinct o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o join "+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v on o."+Objet.OBJET_ID+"=v."+Valeur.OBJET_ID+" where v."+Valeur.OBJET_ID+" is not null or "+Valeur.PRIMITIF_ID+" is not null", null);	
+
 
 	}
        
@@ -1053,6 +1055,7 @@ public class TutosAndroidProvider extends ContentProvider {
 			
 
 			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", o."+Objet.OBJET_ID+", a."+Attribut.ATTRIBUT_NAME+", o."+Objet.OBJET_NAME+", 'objet' as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o on o."+Objet.OBJET_ID+"=v."+Valeur.OBJET_TYPE_ID+" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
+
 
 	}
        
