@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -126,12 +127,14 @@ private android.view.View.OnClickListener btn_modif_click = new View.OnClickList
 			int idB = selected_bd.getBdd_id();
 			List<Objet_bean> listO = bddo.getListeObjetBDD(idB);
 			list_object = new ArrayList<Objet_bean>();
+			Log.v("listO", list_object.size()+"");
 			for(Objet_bean o:listO )
 			{
 				list_object.add(o);
+				Log.v("listO",o.toString());
 			}
 
-			ArrayAdapter<Objet_bean> adapter = new ArrayAdapter<Objet_bean>(EditObjectActivity.this,android.R.layout.simple_spinner_item,list_object);
+			ArrayAdapter<Objet_bean> adapter = new ArrayAdapter<Objet_bean>(getApplicationContext(),android.R.layout.simple_spinner_item,list_object);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			sp_object.setAdapter(adapter);	
 			
