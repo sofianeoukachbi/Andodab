@@ -63,8 +63,11 @@ public class TutosAndroidProvider extends ContentProvider {
 	public static final Uri CONTENT_URI_MAXFINAL = Uri.parse("content://"
 			+ PROVIDER_NAME + "/MaxFinal");
 	
+	public static final Uri CONTENT_URI_OBJETRACINE = Uri.parse("content://"
+			+ PROVIDER_NAME + "/ObjetRacine");
+	
 	public static final String CONTENT_PROVIDER_DB_NAME = "andodab.db";
-	public static final int CONTENT_PROVIDER_DB_VERSION = 2;
+	public static final int CONTENT_PROVIDER_DB_VERSION = 4;
 
 	
 	
@@ -106,7 +109,7 @@ public class TutosAndroidProvider extends ContentProvider {
 	private static final int MAX_OBJET=1200;
 	private static final int MAX_ATTRIBUT=1300;
 	private static final int MAX_FINAL=1400;
-	
+	private static final int OBJET_RACINE=1500;
 	
 
 	private static final int BDD_ID = 101;
@@ -154,6 +157,7 @@ public class TutosAndroidProvider extends ContentProvider {
 		uriMatcher.addURI(PROVIDER_NAME, "MaxObjet", MAX_OBJET);
 		uriMatcher.addURI(PROVIDER_NAME, "MaxAttribut", MAX_ATTRIBUT);
 		uriMatcher.addURI(PROVIDER_NAME, "MaxFinal", MAX_FINAL);
+		uriMatcher.addURI(PROVIDER_NAME, "ObjetRacine", OBJET_RACINE);
 	}
 
 	/**
@@ -188,7 +192,9 @@ public class TutosAndroidProvider extends ContentProvider {
 					+ " (" + Objet.OBJET_ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT," + Objet.OBJET_NAME
 					+ " VARCHAR(255)," + Objet.OBJET_ID_OBJET + " INTEGER,"
-					+ Objet.OBJET_BDD_ID + " INTEGER," + "FOREIGN KEY("
+					+ Objet.OBJET_BDD_ID + " INTEGER," 
+					+ Objet.OBJET_SEALED+ "INTRGER,"
+					+ "FOREIGN KEY("
 					+ Objet.OBJET_ID_OBJET + ") REFERENCES "
 					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_OBJET
 					+ "(" + Objet.OBJET_ID_OBJET + ")," + "FOREIGN KEY("
@@ -242,60 +248,27 @@ public class TutosAndroidProvider extends ContentProvider {
 			db.execSQL("CREATE TABLE "
 					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_FINAL
 					+ " (" + Final.FINAL_ID
-					+ " INTEGER PRIMARY KEY AUTOINCREMENT" + ");");
+					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ Final.FINAL_VAL+ " VARCHAR(255),"
+					+ Final.FINAL_PRIMITIF_ID +" INTEGER, "
+					+ "FOREIGN KEY("+Final.FINAL_PRIMITIF_ID + ") REFERENCES "
+					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_PRIMITIF
+					+ "(" + Primitif.PRIMITIF_ID + "));");;
 			//
 			//
 			// //création de la tables des finaux_int
-			db.execSQL("CREATE TABLE "
-					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_FINAL_INT
-					+ " (" + FinalInt.FINAL_INT_ID
-					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ FinalInt.FINAL_INT_VALUE + " INTEGER," + "FOREIGN KEY("
-					+ FinalInt.FINAL_INT_ID + ") REFERENCES "
-					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_FINAL
-					+ "(" + Final.FINAL_ID + "));");
+			
 			//
 			//
 			// création de la tables des finaux_float
-			db.execSQL("CREATE TABLE "
-					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_FINAL_FLOAT
-					+ " (" + FinalFloat.FINAL_FLOAT_ID
-					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ FinalInt.FINAL_INT_VALUE + " FLOAT," + "FOREIGN KEY("
-					+ FinalFloat.FINAL_FLOAT_ID + ") REFERENCES "
-					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_FINAL
-					+ "(" + Final.FINAL_ID + "));");
-			//
+			
 			//
 			//
 			// création de la tables des finaux_string
-			db.execSQL("CREATE TABLE "
-					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_FINAL_STRING
-					+ " (" + FinalString.FINAL_STRING_ID
-					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ FinalString.FINAL_STRING_VALUE + " VARCHAR(255),"
-					+ "FOREIGN KEY(" + FinalString.FINAL_STRING_ID
-					+ ") REFERENCES "
-					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_FINAL
-					+ "(" + Final.FINAL_ID + "));");
+			
 
 			
-			db.execSQL("CREATE TABLE "
-					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_OBJET_ATTRIBUT
-					+ " (" + Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID
-
-					+ " INTEGER  ,"
-
-					+ Objet_Attribut.OBJET_ATTRIBUT_OBJET_ID  + " INTEGER ,"
-		            +"primary key ("+Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID+","+Objet_Attribut.OBJET_ATTRIBUT_OBJET_ID+"),"				
-					+ "FOREIGN KEY(" + Objet_Attribut.OBJET_ATTRIBUT_ATTRIBUT_ID
-					+ ") REFERENCES "
-					+ TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT
-					+ "(" + Attribut.ATTRIBUT_ID + "),"
-			        + "FOREIGN KEY(" + Objet_Attribut.OBJET_ATTRIBUT_OBJET_ID
-			        + ") REFERENCES "
-			        + TutosAndroidProvider.CONTENT_PROVIDER_TABLE_NAME_OBJET
-			        + "(" + Objet.OBJET_ID + "));");
+			
 		}
 		
 		/**
@@ -1044,6 +1017,13 @@ public class TutosAndroidProvider extends ContentProvider {
 			
 			return db.rawQuery("select max(o."+Final.FINAL_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_FINAL+" as o", null);	
 	}
+     
+       case OBJET_RACINE: {
+			
+			return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+" is null and o."+Objet.OBJET_BDD_ID+"=?", selectionArgs);	
+	}
+      
+       
 		default:
 			return null;
 		}

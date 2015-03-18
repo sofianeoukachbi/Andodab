@@ -35,7 +35,7 @@ public class DessinerFleche extends View {
 		p.setStrokeWidth(2);
 		p.setColor(Color.RED);	
 		p.setAntiAlias(true);
-		canvas.drawLine(x+70, y, 235, 30*this.tailleParent+57, p);			
+		canvas.drawLine(x+70, y, 235, 30*this.tailleParent+73, p);			
 		
 	}
 

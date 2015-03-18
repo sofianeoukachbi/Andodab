@@ -22,13 +22,15 @@ import android.view.View;
 	 */
 	  public interface IFilsCallback {
 	        void getFilsFromDb(String objectName,ArrayList<Attribut_bean> listAttributs);
+		 // void getFilsFromDb(String objectName,ArrayList<String> listAttributs);
 	    }
 	  
 	  
 	  
 	private IFilsCallback interfFils;
 	private  String objectName ;
-    private ArrayList<Attribut_bean> attributs ; 
+   private ArrayList<Attribut_bean> attributs ; 
+//	 private ArrayList<String> attributs ; 
     private int yText;
     private int xObject;
     private int yObject;
@@ -36,9 +38,12 @@ import android.view.View;
       
     
 public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> listAttributs,int x,int y,Boolean dessinerFleche) {
+//    public DessinObjet(Context context,String objectName, ArrayList<String> listAttributs,int x,int y,Boolean dessinerFleche) {
 		super(context);	
 		setBackgroundColor(Color.CYAN);
 		this.attributs = new ArrayList<Attribut_bean>(listAttributs);
+	//	this.attributs = listAttributs;
+//		this.attributs = new ArrayList<String>(listAttributs);
 		this.objectName = objectName;		
 		this.xObject = x;
 		this.yObject = y;
@@ -68,19 +73,26 @@ public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> l
 		p.setColor(Color.RED);
 		p.setTextSize(18);
 		canvas.drawText(this.objectName, 20, 17, p);
-		yText+=20;
-		p.setColor(Color.BLACK);
-		p.setStyle(Style.STROKE);
-		Rect r = new Rect(0, 0, getWidth()-2, getHeight()-2);
-		canvas.drawRect(r, p);
-		p.setTextSize(14);
+		
 		
 		/**
 		 * Afficher dans le rectangle tous les attributs de l'objet
 		 */
-		for (Attribut_bean attribut : attributs) {
-			canvas.drawText(attribut.getAttribut_name(), 10, 17+yText, p);	
+		if(attributs.size()>0){
 			yText+=20;
+			p.setColor(Color.BLACK);
+			p.setStyle(Style.STROKE);
+			Rect r = new Rect(0, 0, getWidth()-2, getHeight()-2);
+			canvas.drawRect(r, p);
+			p.setTextSize(14);
+			
+			for (Attribut_bean attribut : attributs) {
+//				for (String attribut : attributs) {
+					canvas.drawText(attribut.getAttribut_name(), 10, 17+yText, p);	
+//					canvas.drawText(attribut, 10, 17+yText, p);	
+					yText+=20;
+				}
+				
 		}
 		
 	}
@@ -89,7 +101,7 @@ public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> l
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		// TODO Auto-generated method stub
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		setMeasuredDimension(125, 30*this.attributs.size());
+		setMeasuredDimension(125, 45*this.attributs.size());
 		
 	}
 
