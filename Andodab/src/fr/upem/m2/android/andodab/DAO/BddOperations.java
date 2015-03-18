@@ -39,7 +39,7 @@ public class BddOperations {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	//creation d'une base de donnee
 	public void CreateBdd(String name){
 		
 		ContentValues bdd = new ContentValues();
@@ -48,6 +48,7 @@ public class BddOperations {
 		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_BDD,bdd);
 	}
 	
+	//creation d'un objet
 	public Integer createObjet(Objet_bean objet){
 		ContentValues bdd = new ContentValues();
 		bdd.clear();
@@ -75,7 +76,7 @@ public class BddOperations {
 			return max;
 	}
 	
-	
+	//ajouter un attribut comme objet pour un objet
 	public void addObjetToObjet(Integer objet_id, String attributName, Objet_bean objet  ){
 		///creation de l'attribut
 		ContentValues attribut=new ContentValues();
@@ -107,11 +108,11 @@ public class BddOperations {
 		valeur.put(Valeur.OBJET_TYPE_ID, objet.getObjet_id());
 		valeur.put(Valeur.OBJET_ID, objet_id);
 		valeur.put(Valeur.ATTRIBUT_ID, max);
-		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,attribut);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,valeur);
 		
 	}
 	
-	
+	//ajouter un attribut comme attribut à un objet
 	public void addPrimitifToObjet(Integer objet_id, String attributName, Primitif_bean primitif  ){
 		///creation de l'attribut
 		ContentValues attribut=new ContentValues();
@@ -143,47 +144,71 @@ public class BddOperations {
 		valeur.put(Valeur.PRIMITIF_ID, primitif.getPrimitif_id());
 		valeur.put(Valeur.OBJET_ID, objet_id);
 		valeur.put(Valeur.ATTRIBUT_ID, max);
-		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,attribut);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,valeur);
 		
 	}
 	
 	
-//	public void addFinalToObjet(Integer objet_id, String attributName, Final_bean final_b  ){
-//		///creation de l'attribut
-//		ContentValues attribut=new ContentValues();
-//		attribut.clear();
-//		attribut.put(Attribut.ATTRIBUT_NAME, attributName);
-//		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_ATTRIBUT,attribut);
-//		
-//		///recuperer l id de l'attribut
-//		String columnsTest[] = new String[] {"id_max"};
-//		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_MAXATTRIBUT;
-//        Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
-//		
-//        Integer max=null;
-//        
-//		if (curTest.moveToFirst()) {
-//            
-//			do {				
-//
-//				max=curTest.getInt(curTest.getColumnIndex("id_max"));
-//				
-//				
-//			} while (curTest.moveToNext());
-//		
-//		}
-//		
-//		
-//		ContentValues valeur=new ContentValues();
-//		valeur.clear();
-//		valeur.put(Valeur., primitif.getPrimitif_id());
-//		valeur.put(Valeur.OBJET_ID, objet_id);
-//		valeur.put(Valeur.ATTRIBUT_ID, max);
-//		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_FINAL,attribut);
-//		
-//	}
+	public void addFinalToObjet(Integer objet_id, String attributName, Final_bean final_b  ){
+		///creation de l'attribut
+		ContentValues attribut=new ContentValues();
+		attribut.clear();
+		attribut.put(Attribut.ATTRIBUT_NAME, attributName);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_ATTRIBUT,attribut);
+		
+		///recuperer l id de l'attribut
+		String columnsTest[] = new String[] {"id_max"};
+		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_MAXATTRIBUT;
+        Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
+		
+        Integer max=null;
+        
+		if (curTest.moveToFirst()) {
+            
+			do {				
+
+				max=curTest.getInt(curTest.getColumnIndex("id_max"));
+				
+				
+			} while (curTest.moveToNext());
+		
+		}
+		//creation de la valeur final
+		ContentValues finalval=new ContentValues();
+		finalval.clear();
+		finalval.put(Final.FINAL_VAL, final_b.getFinal_val());
+		finalval.put(Final.FINAL_PRIMITIF_ID, final_b.getFinal_primitif_id());
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_FINAL,finalval);
+		
+		///recuperer l id de l'attribut final inserer
+		String columnsTestf[] = new String[] {"id_max"};
+		Uri mContactsTestf = TutosAndroidProvider.CONTENT_URI_MAXFINAL;
+		Cursor curTestf = activite.managedQuery(mContactsTestf, columnsTestf, null, null, null);
+				
+		Integer maxf=null;
+		        
+	    if (curTest.moveToFirst()) {
+		            
+		         do {				
+
+						max=curTest.getInt(curTest.getColumnIndex("id_max"));
+						
+						
+					} while (curTest.moveToNext());
+				
+				}
+		
+		ContentValues valeur=new ContentValues();
+		valeur.clear();
+		
+		valeur.put(Valeur.FINAL_ID, maxf);
+		valeur.put(Valeur.ATTRIBUT_ID, max);
+		valeur.put(Valeur.OBJET_ID, objet_id);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,valeur);
 	
+	}
 	
+	//recuperer la liste des a bases de donnees 
 	public List<Bdd_bean> getListBdd(){
 		Bdd_bean bean;
 		List<Bdd_bean> liste=new ArrayList<Bdd_bean>();
@@ -207,7 +232,7 @@ public class BddOperations {
 		
 	}
 	
-	
+	//recuperer la liste des files d'un objet avec son identifiant
 	public List<Objet_bean> getChildObjet(Integer idParent){
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
 		Objet_bean bean;
@@ -231,7 +256,7 @@ public class BddOperations {
 	return liste;
 	}
 	
-	
+	//recuper les liste des premitifs
 	public List<Primitif_bean> getListPrimitif(){
 		
 		Primitif_bean bean = new Primitif_bean();
@@ -254,14 +279,16 @@ public class BddOperations {
 		return liste;
 	}
 	
+	//supprimer un objet
 	public void deleteObjet(Integer id){
 		//t.delete(TutosAndroidProvider.CONTENT_URI_OBJET, selection, selectionArgs);	
 	}
-	
+	// recuperer la liste des objet racine d'une base de donnee comme identifiant bdd_id
 	public List<Objet_bean> getListRacine(Integer bdd_id){
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
 		Objet_bean bean;
-        String bddC[]=new String[] {bdd_id.toString()};
+
+		String[] bddC=new String[]{bdd_id.toString()};
 		String columnsTest[] = new String[] { Objet.OBJET_ID,Objet.OBJET_NAME,Objet.OBJET_ID_OBJET,Objet.OBJET_SEALED,Objet.OBJET_BDD_ID };
 		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJETRACINE;
 
@@ -286,6 +313,7 @@ public class BddOperations {
 		return liste;		
 	}
 	
+	//recuperer la liste des objets d'une base de donnee comme identifiant bdd_id
 	public List<Objet_bean> getListeObjetBDD(Integer bdd_id){
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
 		Objet_bean bean;
@@ -310,7 +338,7 @@ public class BddOperations {
 		return liste;
 		
 	}
-	
+	//recuper la liste des attributs d'un objets
 	public List<Attribut_bean> getListAttributObjet(Integer objet_id){
 		List<Attribut_bean> liste = new ArrayList<Attribut_bean>();
 		
@@ -318,9 +346,8 @@ public class BddOperations {
 		
 		return liste;
 	}
-	public void setAttributToObjet(Integer objet_id){
-		
-	}
+	
+	
 	
 	
 }

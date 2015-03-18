@@ -5,9 +5,13 @@ import java.util.List;
 
 import fr.upem.m2.android.andodab.DAO.BddOperations;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Primitif;
+import fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Bdd;
 import android.R.color;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,6 +41,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accueil);
 
+		
+		
 		bddo = new BddOperations(this);
 		initView();
 		initEventView();

@@ -28,11 +28,12 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 	
 		db = new BddOperations(this);
 		int dbId = getIntent().getIntExtra("id", 0);
+		Log.v("idB", ""+dbId);
 		
 //		Log.v("id", ""+dbId);
 //		db.createObjet(new Objet_bean("obj1", null,null,dbId)); 
 //		db.createObjet(new Objet_bean("obj2", null,null,dbId)); 
-		
+//		
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.consult_objects);
