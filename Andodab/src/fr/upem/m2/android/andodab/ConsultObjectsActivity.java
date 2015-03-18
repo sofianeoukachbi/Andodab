@@ -55,10 +55,11 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 			
 			int objectId = racine.getObjet_id();
 			
-			ArrayList<Attribut_bean> attributs = new ArrayList<Attribut_bean>();
-			attributs.add(new Attribut_bean("attrib1"));
+			ArrayList<Attribut_bean> attributs = new ArrayList<Attribut_bean>(db.getListAttributObjet(objectId));
+			Log.v("a","" +attributs.size()  );
+			//attributs.add(new Attribut_bean("attrib1"));
 			
-			DessinObjet racineView = new DessinObjet(this, racine.getObjet_nom(), attributs, 80+x,60+y, false);
+			DessinObjet racineView = new DessinObjet(this, racine.getObjet_nom(), attributs, 80+x,60+y, false,objectId);
 			
 			 
   				RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50+x, 40+y);
@@ -145,7 +146,7 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 	 */
 
 	@Override
-	public void getFilsFromDb(String objectName, ArrayList<Attribut_bean> listAttributs) {
+	public void getFilsFromDb(String objectName, ArrayList<Attribut_bean> listAttributs, int objectId) {
 //	public void getFilsFromDb(String objectName, ArrayList<String> listAttributs) {
 		
 		mainLayout.removeAllViews();
@@ -163,7 +164,7 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 //		mainLayout.addView(pere, paramPere);
 		
 		DessinObjet pere = new DessinObjet(this, objectName, listAttributs,
- 				170, 60, false);
+ 				170, 60, false,objectId);
  		RelativeLayout.LayoutParams paramPere = new RelativeLayout.LayoutParams(
  				150, 40);
  		paramPere.leftMargin = 170;
@@ -239,7 +240,7 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 
 		for (int i = 0; i < filsList.size(); i++) {
 		DessinObjet filsView = new DessinObjet(this, filsList.get(i).getObjet_nom(),
-					attributFils.get(i), 50 + x, 270, true);
+					attributFils.get(i), 50 + x, 270, true,1);
 
 			DessinerFleche fleche = new DessinerFleche(this, 50 + x, 270,margeFleche,listAttributs.size());
 			mainLayout.addView(fleche);

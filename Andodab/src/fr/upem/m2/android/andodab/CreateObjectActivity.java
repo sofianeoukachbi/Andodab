@@ -261,8 +261,12 @@ case 3:
 			
 		}
 			
-		}
+		}		
 		
+		objectName.setText("");
+		attribItemList.clear();
+		listAdapter.notifyDataSetChanged();
+		Toast.makeText(getApplicationContext(), "Objet crée !", Toast.LENGTH_SHORT).show();
 		
 		
 	}

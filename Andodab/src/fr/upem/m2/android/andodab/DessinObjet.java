@@ -21,7 +21,7 @@ import android.view.View;
 	 *
 	 */
 	  public interface IFilsCallback {
-	        void getFilsFromDb(String objectName,ArrayList<Attribut_bean> listAttributs);
+	        void getFilsFromDb(String objectName,ArrayList<Attribut_bean> listAttributs,int idObjet);
 		 // void getFilsFromDb(String objectName,ArrayList<String> listAttributs);
 	    }
 	  
@@ -35,13 +35,15 @@ import android.view.View;
     private int xObject;
     private int yObject;
     private Boolean dessinerFleche;
+    private int idObjet;
       
     
-public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> listAttributs,int x,int y,Boolean dessinerFleche) {
+public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> listAttributs,int x,int y,Boolean dessinerFleche, int idObjet) {
 //    public DessinObjet(Context context,String objectName, ArrayList<String> listAttributs,int x,int y,Boolean dessinerFleche) {
 		super(context);	
 		setBackgroundColor(Color.CYAN);
 		this.attributs = new ArrayList<Attribut_bean>(listAttributs);
+		this.idObjet = idObjet;
 	//	this.attributs = listAttributs;
 //		this.attributs = new ArrayList<String>(listAttributs);
 		this.objectName = objectName;		
@@ -60,7 +62,7 @@ public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> l
 /**
  * Envoyer à l'activité l'objet selectionner pour interoger la base de données et chercher ses fils
  */
-	interfFils.getFilsFromDb(this.objectName, this.attributs);
+	interfFils.getFilsFromDb(this.objectName, this.attributs,this.idObjet);
 	
 		return super.onTouchEvent(event);
 	}
