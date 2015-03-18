@@ -6,6 +6,8 @@ package fr.upem.m2.android.andodab;
 
 import fr.upem.m2.android.andodab.R;
 import fr.upem.m2.android.andodab.DAO.BddOperations;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Attribut;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Objet;
 import fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider;
 import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Bdd;
 import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Primitif;
@@ -23,7 +25,7 @@ public class ContentProviderExempleActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accueil);
-		test();
+		//test();
 		//insertRecords();
 		displayContentProvider();
 		
@@ -32,7 +34,6 @@ public class ContentProviderExempleActivity extends Activity {
 	private void test(){
 		BddOperations bdd = new BddOperations(this);
 		bdd.CreateBdd("juba");
-		
 	}
 
 	private void displayContentProvider() {
@@ -45,18 +46,17 @@ public class ContentProviderExempleActivity extends Activity {
 		
 		
 		
-		String columnsTest[] = new String[] { Bdd.BDD_ID,Bdd.BDD_NAME };
-		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_BDD;
-		Cursor curTest = managedQuery(mContactsTest, columnsTest, null, null, null);
+		String columnsTest[] = new String[] { Attribut.ATTRIBUT_NAME};
+		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJETOFOBJET;
+		String contraites[] =new String[] {"1"};
+		Cursor curTest = managedQuery(mContactsTest, columnsTest, null, contraites, null);
 		Toast.makeText(ContentProviderExempleActivity.this, curTest.getCount() + "",
 				Toast.LENGTH_LONG).show();
 
 		if (curTest.moveToFirst()) {
 			String name = null;
 			do {
-				name = curTest.getString(curTest.getColumnIndex(Bdd.BDD_ID)) + " " +
-						 
-						curTest.getString(curTest.getColumnIndex(Bdd.BDD_NAME));
+				name = curTest.getString(curTest.getColumnIndex(Attribut.ATTRIBUT_NAME));
 				Toast.makeText(this, name + " ", Toast.LENGTH_LONG).show();
 			} while (curTest.moveToNext());
 			

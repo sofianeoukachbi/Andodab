@@ -1,5 +1,6 @@
 package fr.upem.m2.android.andodab.providerAndo;
 
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Valeur;
 import fr.upem.m2.android.andodab.providerAndo.SharedInformation.*;
 
 import android.content.ContentProvider;
@@ -66,6 +67,18 @@ public class TutosAndroidProvider extends ContentProvider {
 	public static final Uri CONTENT_URI_OBJETRACINE = Uri.parse("content://"
 			+ PROVIDER_NAME + "/ObjetRacine");
 	
+	public static final Uri CONTENT_URI_OBJETNONFINAUX = Uri.parse("content://"
+			+ PROVIDER_NAME + "/ObjetNonFinaux");
+	
+	public static final Uri CONTENT_URI_OBJETOFOBJET = Uri.parse("content://"
+			+ PROVIDER_NAME + "/ObjetOfObjet");
+	
+	public static final Uri CONTENT_URI_PRIMITIFOFOBJET = Uri.parse("content://"
+			+ PROVIDER_NAME + "/PrimitifOfObjet");
+	
+	public static final Uri CONTENT_URI_FINALOFOBJET = Uri.parse("content://"
+			+ PROVIDER_NAME + "/FinalOfObjet");
+	
 	public static final String CONTENT_PROVIDER_DB_NAME = "andodab.db";
 	public static final int CONTENT_PROVIDER_DB_VERSION = 4;
 
@@ -110,8 +123,11 @@ public class TutosAndroidProvider extends ContentProvider {
 	private static final int MAX_ATTRIBUT=1300;
 	private static final int MAX_FINAL=1400;
 	private static final int OBJET_RACINE=1500;
+	private static final int OBJET_NONFINAUX=1600;
+	private static final int OBJETOFOBJET=1700;
+	private static final int PRIMITIFOFOBJET=1800;
+	private static final int FINALOFOBJET=1900;
 	
-
 	private static final int BDD_ID = 101;
 	private static final int OBJET_ID = 201;
 	private static final int ATTRIBUT_ID = 301;
@@ -158,6 +174,10 @@ public class TutosAndroidProvider extends ContentProvider {
 		uriMatcher.addURI(PROVIDER_NAME, "MaxAttribut", MAX_ATTRIBUT);
 		uriMatcher.addURI(PROVIDER_NAME, "MaxFinal", MAX_FINAL);
 		uriMatcher.addURI(PROVIDER_NAME, "ObjetRacine", OBJET_RACINE);
+		uriMatcher.addURI(PROVIDER_NAME, "ObjetNonFinaux", OBJET_NONFINAUX);
+		uriMatcher.addURI(PROVIDER_NAME, "ObjetOfObjet", OBJETOFOBJET);
+		uriMatcher.addURI(PROVIDER_NAME, "PrimitifOfObjet", PRIMITIFOFOBJET);
+		uriMatcher.addURI(PROVIDER_NAME, "FinalOfObjet", FINALOFOBJET);
 	}
 
 	/**
@@ -1001,29 +1021,64 @@ public class TutosAndroidProvider extends ContentProvider {
 		
 		case CHILD_OBJET: {
 			
-				return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+"=? ", selectionArgs);	
-		}
-		
-		case MAX_OBJET: {
-			
-			return db.rawQuery("select max(o."+Objet.OBJET_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" as o", null);	
+			return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+"=? ", selectionArgs);	
 	}
 	
-       case MAX_ATTRIBUT: {
+	case MAX_OBJET: {
+		
+		return db.rawQuery("select max(o."+Objet.OBJET_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+"  o", null);	
+}
+
+   case MAX_ATTRIBUT: {
+		
+		return db.rawQuery("select max(o."+Attribut.ATTRIBUT_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+"  o", null);	
+}
+   case MAX_FINAL: {
+		
+		return db.rawQuery("select max(o."+Final.FINAL_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_FINAL+"  o", null);	
+}
+ 
+   case OBJET_RACINE: {
+		
+		return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+" is null and o."+Objet.OBJET_BDD_ID+"=?", selectionArgs);	
+}
+      
+       case OBJET_NONFINAUX: {
 			
+<<<<<<< HEAD
+			return db.rawQuery("select distinct o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o join "+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v on o."+Objet.OBJET_ID+"=v."+Valeur.OBJET_ID+" where v."+Valeur.OBJET_ID+" is not null or "+Valeur.PRIMITIF_ID+" is not null", null);	
+=======
+			return db.rawQuery("select max(o."+Objet.OBJET_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" as o", null);	
+>>>>>>> 8dc891a7c1eb4afa03dc8fc9241957d76acb7a29
+	}
+       
+       case OBJETOFOBJET: {
+			
+<<<<<<< HEAD
+			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", o."+Objet.OBJET_ID+", a."+Attribut.ATTRIBUT_NAME+", o."+Objet.OBJET_NAME+", objet as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o on o."+Objet.OBJET_ID+"=v."+Valeur.OBJET_TYPE_ID+" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
+=======
 			return db.rawQuery("select max(o."+Attribut.ATTRIBUT_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" as o", null);	
+>>>>>>> 8dc891a7c1eb4afa03dc8fc9241957d76acb7a29
 	}
-       case MAX_FINAL: {
+       
+       case PRIMITIFOFOBJET : {
 			
+<<<<<<< HEAD
+			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", P."+Primitif.PRIMITIF_ID+", a."+Attribut.ATTRIBUT_NAME+" ,P."+Primitif.PRIMITIF_NAME+", primitif as type  from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_PRIMITIF+" p on p."+Primitif.PRIMITIF_ID+"=v."+Valeur.PRIMITIF_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
+=======
 			return db.rawQuery("select max(o."+Final.FINAL_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_FINAL+" as o", null);	
+>>>>>>> 8dc891a7c1eb4afa03dc8fc9241957d76acb7a29
 	}
-     
-       case OBJET_RACINE: {
+       
+       case FINALOFOBJET : {
 			
+<<<<<<< HEAD
+			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", F."+Final.FINAL_ID+", a."+Attribut.ATTRIBUT_NAME+", F."+Final.FINAL_VAL+", final as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_FINAL+" f on f."+Final.FINAL_ID+"=v."+Valeur.FINAL_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
+=======
 			return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+" is null and o."+Objet.OBJET_BDD_ID+"=?", selectionArgs);	
 
+>>>>>>> 8dc891a7c1eb4afa03dc8fc9241957d76acb7a29
 	}
-      
        
 		default:
 			return null;
