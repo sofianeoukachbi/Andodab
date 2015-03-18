@@ -41,6 +41,7 @@
     <string-array name="type_primitif">
         <item>String</item>
         <item>int</item>
+        <item>float</item>
     </string-array>
 
     <string name="ajout_btn_txt">Ajouter</string>

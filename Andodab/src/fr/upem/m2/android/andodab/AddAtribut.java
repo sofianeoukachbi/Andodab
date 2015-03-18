@@ -9,6 +9,7 @@ import fr.upem.m2.android.andodab.beans.Primitif_bean;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,13 +84,19 @@ public class AddAtribut extends Activity {
 		objectListAdaper.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		objectList.setAdapter(objectListAdaper);	
 		 
-		 List<Primitif_bean> listPrimitif = db.getListPrimitif();
-  
-		ArrayAdapter<Primitif_bean> primitifAdapter = new ArrayAdapter<Primitif_bean>(AddAtribut.this,android.R.layout.simple_spinner_item,listPrimitif);
-		primitifAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		primitfList.setAdapter(primitifAdapter);		    
-		primitfList.setSelection(primitfList.getSelectedItemPosition(), false);
+//		 List<Primitif_bean> listPrimitif = db.getListPrimitif();
+//		 Log.v("prim", ""+listPrimitif.size());  
+//		ArrayAdapter<Primitif_bean> primitifAdapter = new ArrayAdapter<Primitif_bean>(AddAtribut.this,android.R.layout.simple_spinner_item,listPrimitif);
+//		primitifAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		primitfList.setAdapter(primitifAdapter);		    
+//		primitfList.setSelection(primitfList.getSelectedItemPosition(), false);
 		
+ 
+		//ArrayAdapter<String> primitifAdapter = new ArrayAdapter<String>(AddAtribut.this,android.R.layout.simple_spinner_item,listPrimitif);
+		//primitifAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//primitfList.setAdapter(primitifAdapter);		    
+		primitfList.setSelection(primitfList.getSelectedItemPosition(), false);
+				
 	 
 	}
 
@@ -155,22 +162,34 @@ public class AddAtribut extends Activity {
 	
 public void validerAjoutAttrib(View v){
 		String value = null;
+		/**
+		 * type == 1 -> valeur final
+		 * type == 2 -> objet
+		 * type == 3 primitif
+		 */
+		int type=0;
+		
 		Intent intent = new Intent(getApplicationContext(),CreateObjectActivity.class);
 		intent.putExtra("Nom", nomAttrib.getText().toString());
 		 
 		if(valueAttrib.getVisibility() == View.VISIBLE){
 			value = valueAttrib.getText().toString();
+			type =1;
 		}
 		else
 			if(objectList.getVisibility() == View.VISIBLE){
 				value = objectList.getSelectedItem().toString();
+				type = 2;
 			}
 			else
 				if(primitfList.getVisibility() == View.VISIBLE)
 				{
-					value = primitfList.getSelectedItem().toString();
+					value = primitfList.getSelectedItem().toString();					
+					type = 3;									
+					
 				}
 		intent.putExtra("Value", value);
+		intent.putExtra("Type", type);
 			
 		setResult(RESULT_OK,intent);
 		finish();

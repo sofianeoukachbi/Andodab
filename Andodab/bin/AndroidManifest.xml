@@ -15,36 +15,46 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
  
              
-        </activity>
-        <activity
-            android:name=".CreateObjectActivity"
-            android:label="@string/title_activity_create_object" >
-        </activity>
-        <activity
-            android:name=".AddAtribut"
-            android:label="@string/title_activity_add_atribut" >
-        </activity>
-        <activity android:name=".EditObjectActivity" >
-        </activity>
-        <activity android:name=".EditValueObjectActivity" >
-        </activity>
-        <activity android:name=".ContentProviderExempleActivity" >
                 <intent-filter>
  
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
+        </activity>
+        <activity
+            android:name=".CreateObjectActivity"
+            android:label="@string/title_activity_create_object" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".AddAtribut"
+            android:label="@string/title_activity_add_atribut" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".EditObjectActivity" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".EditValueObjectActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".ContentProviderExempleActivity" >
+
            
         </activity>
-            <activity android:name=".ConsultObjectsActivity" >
+ 
+            <activity android:name=".ConsultObjectsActivity" 
+                android:screenOrientation="landscape">
 
                 
            
         </activity>
+ 
 
         <provider
             android:name="fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider"

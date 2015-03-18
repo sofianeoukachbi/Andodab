@@ -55,7 +55,7 @@ public class BddOperations {
 		ContentValues bdd = new ContentValues();
 		bdd.clear();
 		bdd.put(Objet.OBJET_NAME, objet.getObjet_nom());
-		bdd.put(Objet.OBJET_SEALED, objet.getObjet_sealed());
+//		bdd.put(Objet.OBJET_SEALED, objet.getObjet_sealed());
 		bdd.put(Objet.OBJET_BDD_ID, objet.getObjet_bdd_id());
 		bdd.put(Objet.OBJET_ID_OBJET, objet.getObjet_objet_id());
 		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_OBJET,bdd);
@@ -286,9 +286,11 @@ public class BddOperations {
 	public List<Objet_bean> getListRacine(Integer bdd_id){
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
 		Objet_bean bean;
+
 		String[] bddC=new String[]{bdd_id.toString()};
 		String columnsTest[] = new String[] { Objet.OBJET_ID,Objet.OBJET_NAME,Objet.OBJET_ID_OBJET,Objet.OBJET_SEALED,Objet.OBJET_BDD_ID };
 		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJETRACINE;
+
 		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, bddC, null);
 		
 		if (curTest.moveToFirst()) {
@@ -298,7 +300,7 @@ public class BddOperations {
 				bean.setObjet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID)));
 				bean.setObjet_nom(curTest.getString(curTest.getColumnIndex(Objet.OBJET_NAME)));
 				bean.setObjet_objet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID_OBJET)));
-				bean.setObjet_sealed(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_SEALED)));
+				
 				bean.setObjet_bdd_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_BDD_ID)));			
 				
 					
@@ -314,7 +316,7 @@ public class BddOperations {
 	public List<Objet_bean> getListeObjetBDD(Integer bdd_id){
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
 		Objet_bean bean;
-		String columnsTest[] = new String[] { Objet.OBJET_ID,Objet.OBJET_NAME,Objet.OBJET_ID_OBJET,Objet.OBJET_SEALED,Objet.OBJET_BDD_ID };
+		String columnsTest[] = new String[] { Objet.OBJET_ID,Objet.OBJET_NAME,Objet.OBJET_ID_OBJET,Objet.OBJET_BDD_ID };
 		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJET;
 		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
 		
@@ -324,7 +326,7 @@ public class BddOperations {
 				bean.setObjet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID)));
 				bean.setObjet_nom(curTest.getString(curTest.getColumnIndex(Objet.OBJET_NAME)));
 				bean.setObjet_objet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID_OBJET)));
-				bean.setObjet_sealed(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_SEALED)));
+				
 				bean.setObjet_bdd_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_BDD_ID)));
 				
 				if(bean.getObjet_bdd_id()==bdd_id){

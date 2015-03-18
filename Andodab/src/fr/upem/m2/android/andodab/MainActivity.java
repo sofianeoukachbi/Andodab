@@ -5,20 +5,23 @@ import java.util.List;
 
 import fr.upem.m2.android.andodab.DAO.BddOperations;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
-
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Primitif;
+import fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Bdd;
 import android.R.color;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -38,6 +41,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accueil);
 
+		
+		
 		bddo = new BddOperations(this);
 		initView();
 		initEventView();
@@ -79,23 +84,26 @@ public class MainActivity extends Activity {
         adb.setTitle("Choix de la BDD");
         
         adb.setIcon(getResources().getDrawable(R.drawable.choix));
+ 
+        
+        final List<Bdd_bean> dbList = bddo.getListBdd();
+        
+        final Spinner listBdd = (Spinner) alertDialogView.findViewById(R.id.list_bdd);
+        ArrayAdapter<Bdd_bean> dbNameAdapter = new ArrayAdapter<Bdd_bean>(MainActivity.this,android.R.layout.simple_spinner_item,dbList);
+		dbNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		listBdd.setAdapter(dbNameAdapter);		    
+		listBdd.setSelection(listBdd.getSelectedItemPosition(), false);
         
         //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
  
         adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
- 
-
-//            	//Lorsque l'on cliquera sur le bouton "OK", on récupère l'EditText correspondant à notre vue personnalisée (cad à alertDialogView)
-//            	EditText et = (EditText)alertDialogView.findViewById(R.id.EditText1);
-// 
-//            	//On affiche dans un Toast le texte contenu dans l'EditText de notre AlertDialog
-            	Toast.makeText(MainActivity.this, "okiii", Toast.LENGTH_SHORT).show();
-            	
-
-
+            	   int index =  listBdd.getSelectedItemPosition();
+            	   int dbId = dbList.get(index).getBdd_id();
             	Intent intent = new Intent(getApplicationContext(),
         				ConsultObjectsActivity.class);
+            	intent.putExtra("id",dbId );
+            	//putInteger("db_id", dbList.get(listBdd.getSelectedItemPosition());
         		startActivity(intent);
         		
 

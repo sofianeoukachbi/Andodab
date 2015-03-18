@@ -5,6 +5,13 @@ public class Primitif_bean {
 	private Integer primitif_id;
 	private String primitif_name;
 	
+	
+	
+	public Primitif_bean(Integer primitif_id) {
+		super();
+		this.primitif_id = primitif_id;
+	}
+
 	public Primitif_bean() {
 		// TODO Auto-generated constructor stub
 	}

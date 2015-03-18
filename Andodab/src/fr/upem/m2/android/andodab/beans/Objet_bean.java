@@ -13,12 +13,16 @@ public class Objet_bean {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public Objet_bean(String objet_nom, Integer objet_objet_id,Integer objet_sealed,Integer objet_bdd_id ) {
+
 		super();
 		this.objet_nom = objet_nom;
 		this.objet_objet_id = objet_objet_id;
 		this.objet_bdd_id=objet_bdd_id;
+
 		this.objet_sealed=objet_sealed;
+
 	}
 	public Integer getObjet_id() {
 		return objet_id;

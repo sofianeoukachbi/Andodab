@@ -5,6 +5,9 @@ import java.util.List;
 
 import fr.upem.m2.android.andodab.DAO.BddOperations;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
+import fr.upem.m2.android.andodab.beans.Final_bean;
+import fr.upem.m2.android.andodab.beans.Objet_bean;
+import fr.upem.m2.android.andodab.beans.Primitif_bean;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +20,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
 
 public class CreateObjectActivity extends Activity {
@@ -29,14 +34,64 @@ public class CreateObjectActivity extends Activity {
 	private Spinner parentList;
 	private ListView attributList;
 	private Button annulerCreation,validerCreation,ajouterAttribut;
-	private ArrayList<String> attribItemList;
-	private ArrayAdapter<String> listAdapter;
+	private ArrayList<AttributType> attribItemList;
+	private ArrayAdapter<AttributType> listAdapter;
 	private String selectedDBname;
 	private int selectedDBid;
 	private int selectedAttrib=-1;
 	private BddOperations db;
+	private EditText objectName ;
 	 
 
+	
+	public class AttributType {
+		private int type;
+		private String valeur;
+		private String nom;
+		
+		public AttributType(int type, String valeur, String nom) {
+			
+			this.type = type;
+			this.valeur = valeur;
+			this.nom = nom;
+		}
+
+		@Override
+		public String toString() {
+			return  nom + " : " + valeur ;
+		}
+
+		public int getType() {
+			return type;
+		}
+
+		public void setType(int type) {
+			this.type = type;
+		}
+
+		public String getValeur() {
+			return valeur;
+		}
+
+		public void setValeur(String valeur) {
+			this.valeur = valeur;
+		}
+
+		public String getNom() {
+			return nom;
+		}
+
+		public void setNom(String nom) {
+			this.nom = nom;
+		}
+		
+		
+		
+		
+	}
+	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,6 +105,8 @@ public class CreateObjectActivity extends Activity {
 		annulerCreation = (Button) findViewById(R.id.cancelBtn);
 		validerCreation = (Button) findViewById(R.id.validerBtn);
 		ajouterAttribut = (Button) findViewById(R.id.addAtributBtn);
+		
+		objectName = (EditText) findViewById(R.id.objectNameTxt);
 						
 		
 		//Appel methode qui retourne le nom des base de donné existant
@@ -59,7 +116,7 @@ public class CreateObjectActivity extends Activity {
 		ArrayAdapter<Bdd_bean> dbNameAdapter = new ArrayAdapter<Bdd_bean>(CreateObjectActivity.this,android.R.layout.simple_spinner_item,dbList);
 		dbNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		dbNameSpinner.setAdapter(dbNameAdapter);		    
-		dbNameSpinner.setSelection(dbNameSpinner.getSelectedItemPosition(), false);
+		//dbNameSpinner.setSelection(dbNameSpinner.getSelectedItemPosition(), false);
 		dbNameSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -113,8 +170,8 @@ public class CreateObjectActivity extends Activity {
 		
 		
 		
-		attribItemList = new ArrayList<String>();
-		  listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,attribItemList);
+		attribItemList = new ArrayList<AttributType>();
+		  listAdapter = new ArrayAdapter<AttributType>(this, android.R.layout.simple_list_item_1,attribItemList);
 		attributList.setAdapter(listAdapter);
 		
 		
@@ -159,16 +216,75 @@ public class CreateObjectActivity extends Activity {
 	
 	public void doCreateObject(View v){		
 		Log.v("sefse", "sdssrgs");
+		
+		Objet_bean objet = new Objet_bean(objectName.getText().toString(),null,null,selectedDBid);
+		
+		int objectId = db.createObjet(objet);
+		Log.v("idO", ""+objectId);
+		
+		for (AttributType attrib : attribItemList) {
+			String valeur = attrib.getValeur();	
+			
+		switch (attrib.getType()) {	 
+		// valeur final
+		case 1:
+			
+					
+			Final_bean valeurFinal = new Final_bean(null,attrib.getValeur(), null);
+			db.addFinalToObjet(objectId, attrib.getNom(), valeurFinal);
+			break;
+			
+		case 2:
+			// Objet
+			break;
+			
+case 3:
+	//  primitif
+	int idPrimitif ;
+	if(valeur == "String")
+	{
+		idPrimitif = 1;
+	}
+	else
+		if(valeur == "float"){
+			idPrimitif = 2;	
+		}
+		else
+		{
+			idPrimitif = 3;
+		}
+	
+	Primitif_bean primitif = new Primitif_bean(idPrimitif);
+	db.addPrimitifToObjet(objectId, attrib.getNom(), primitif);
+			
+			break;
+			
+		}
+			
+		}
+		
+		
+		
 	}
 	
 	public void doAddAttribut(View v){
 		
+	if(selectedDBname.equals(null)){
+		Toast.makeText(getApplicationContext(), "Il faut choisir une BD", Toast.LENGTH_LONG).show();
+	}
+	else
+	{		
 		Intent intent  = new Intent(getApplicationContext(),AddAtribut.class);
 		Log.v("class", selectedDBname);
 		Log.v("class", ""+ selectedDBid);
 		intent.putExtra("db", selectedDBname);
 		intent.putExtra("db_id", selectedDBid);
-		startActivityForResult(intent, 0);		
+		startActivityForResult(intent, 0);	
+		
+		
+	}
+			
+	 
 	}
 
 	@Override
@@ -178,7 +294,7 @@ public class CreateObjectActivity extends Activity {
 		
 		if (resultCode == Activity.RESULT_OK) {
 	        Log.v("infoo","atrribut="+data.getExtras().getString("Nom")+"---"+data.getExtras().getString("Value"));
-	        attribItemList.add(data.getExtras().getString("Nom")+" : "+data.getExtras().getString("Value"));
+	        attribItemList.add(new AttributType(data.getExtras().getInt("Type"), data.getExtras().getString("Value"), data.getExtras().getString("Nom")));
 	        listAdapter.notifyDataSetChanged();
 	      
 	      }
