@@ -1,9 +1,11 @@
 package fr.upem.m2.android.andodab.DAO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import fr.upem.m2.android.andodab.beans.Attribut_bean;
+import fr.upem.m2.android.andodab.beans.AttributeObjet;
 import fr.upem.m2.android.andodab.beans.Bdd_bean;
 import fr.upem.m2.android.andodab.beans.Final_bean;
 import fr.upem.m2.android.andodab.beans.Objet_bean;
@@ -108,7 +110,7 @@ public class BddOperations {
 		valeur.put(Valeur.OBJET_TYPE_ID, objet.getObjet_id());
 		valeur.put(Valeur.OBJET_ID, objet_id);
 		valeur.put(Valeur.ATTRIBUT_ID, max);
-		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,attribut);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,valeur);
 		
 	}
 	
@@ -144,11 +146,11 @@ public class BddOperations {
 		valeur.put(Valeur.PRIMITIF_ID, primitif.getPrimitif_id());
 		valeur.put(Valeur.OBJET_ID, objet_id);
 		valeur.put(Valeur.ATTRIBUT_ID, max);
-		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,attribut);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,valeur);
 		
 	}
 	
-	
+	//ajouter un attribut comme valeur final à un objet
 	public void addFinalToObjet(Integer objet_id, String attributName, Final_bean final_b  ){
 		///creation de l'attribut
 		ContentValues attribut=new ContentValues();
@@ -204,11 +206,11 @@ public class BddOperations {
 		valeur.put(Valeur.FINAL_ID, maxf);
 		valeur.put(Valeur.ATTRIBUT_ID, max);
 		valeur.put(Valeur.OBJET_ID, objet_id);
-		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_FINAL,attribut);
+		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,valeur);
 	
 	}
 	
-	//recuperer la liste des a bases de donnees 
+	//recuperer la liste des  bases de donnees 
 	public List<Bdd_bean> getListBdd(){
 		Bdd_bean bean;
 		List<Bdd_bean> liste=new ArrayList<Bdd_bean>();
@@ -279,10 +281,7 @@ public class BddOperations {
 		return liste;
 	}
 	
-	//supprimer un objet
-	public void deleteObjet(Integer id){
-		//t.delete(TutosAndroidProvider.CONTENT_URI_OBJET, selection, selectionArgs);	
-	}
+	
 	// recuperer la liste des objet racine d'une base de donnee comme identifiant bdd_id
 	public List<Objet_bean> getListRacine(Integer bdd_id){
 		List<Objet_bean> liste = new ArrayList<Objet_bean>();
@@ -336,16 +335,115 @@ public class BddOperations {
 		return liste;
 		
 	}
-	//recuper la liste des attributs d'un objets
-	public List<Attribut_bean> getListAttributObjet(Integer objet_id){
-		List<Attribut_bean> liste = new ArrayList<Attribut_bean>();
+	
+	//liste des objet non finaux
+	public List<Objet_bean> getListObjetNonFinaux(){
+		List<Objet_bean> liste = new ArrayList<Objet_bean>();
+		Objet_bean bean;
+		String columnsTest[] = new String[] { Objet.OBJET_ID,Objet.OBJET_NAME,Objet.OBJET_ID_OBJET,Objet.OBJET_SEALED,Objet.OBJET_BDD_ID };
+		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJETNONFINAUX;
+		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, null, null);
 		
-		
-		
+		if (curTest.moveToFirst()) {
+			do {
+				bean = new Objet_bean();
+				bean.setObjet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID)));
+				bean.setObjet_nom(curTest.getString(curTest.getColumnIndex(Objet.OBJET_NAME)));
+				bean.setObjet_objet_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID_OBJET)));
+				bean.setObjet_sealed(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_SEALED)));
+				bean.setObjet_bdd_id(curTest.getInt(curTest.getColumnIndex(Objet.OBJET_BDD_ID)));
+				
+				liste.add(bean);
+				
+			} while (curTest.moveToNext());
+		}
 		return liste;
 	}
 	
+	//recuper la liste des attributs d'un objets
+	public List<AttributeObjet> getListAttributObjet(Integer objet_id){
+		 
+		List<AttributeObjet> list=new ArrayList<AttributeObjet>();
+		
+		String contraites[] =new String[] {objet_id.toString()};
+		//non des attributs et des objet
+		String columnsTest[] = new String[] {Attribut.ATTRIBUT_ID,Objet.OBJET_ID, Attribut.ATTRIBUT_NAME,Objet.OBJET_NAME,"type"};
+		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJETOFOBJET;
+		Cursor curTest = activite.managedQuery(mContactsTest, columnsTest, null, contraites, null);
+		
+		if (curTest.moveToFirst()) {
+			do {
+				AttributeObjet a=new AttributeObjet(curTest.getInt(curTest.getColumnIndex(Attribut.ATTRIBUT_ID)),
+						curTest.getInt(curTest.getColumnIndex(Objet.OBJET_ID)),
+						curTest.getString(curTest.getColumnIndex(Attribut.ATTRIBUT_NAME)),
+						curTest.getString(curTest.getColumnIndex(Objet.OBJET_NAME)),"type");
+				
+				list.add(a);
+				
+			} while (curTest.moveToNext());
+		}
+			//non des attributs et des primitif
+			
+			Uri mContactsTestp = TutosAndroidProvider.CONTENT_URI_PRIMITIFOFOBJET;
+			String columnsTestp[] = new String[] {Attribut.ATTRIBUT_ID,Primitif.PRIMITIF_ID, Attribut.ATTRIBUT_NAME,Objet.OBJET_NAME,"type"};
+			Cursor curTestp = activite.managedQuery(mContactsTest, columnsTest, null, contraites, null);
+			
+			if (curTest.moveToFirst()) {
+				do {
+					AttributeObjet a=new AttributeObjet(curTest.getInt(curTest.getColumnIndex(Attribut.ATTRIBUT_ID)),
+							curTest.getInt(curTest.getColumnIndex(Primitif.PRIMITIF_ID)),
+							curTest.getString(curTest.getColumnIndex(Attribut.ATTRIBUT_NAME)),
+							curTest.getString(curTest.getColumnIndex(Primitif.PRIMITIF_NAME)),"type");
+					
+					list.add(a);
+				} while (curTest.moveToNext());
+			}
+				//non des attributs et des primitif
+				
+				Uri mContactsTestf = TutosAndroidProvider.CONTENT_URI_FINALOFOBJET;
+				String columnsTestf[] = new String[] {Attribut.ATTRIBUT_ID,Final.FINAL_ID, Attribut.ATTRIBUT_NAME,Objet.OBJET_NAME,"type"};
+				Cursor curTestf = activite.managedQuery(mContactsTest, columnsTest, null, contraites, null);
+				
+				if (curTest.moveToFirst()) {
+					do {
+						AttributeObjet a=new AttributeObjet(curTest.getInt(curTest.getColumnIndex(Attribut.ATTRIBUT_ID)),
+								curTest.getInt(curTest.getColumnIndex(Final.FINAL_ID)),
+								curTest.getString(curTest.getColumnIndex(Attribut.ATTRIBUT_NAME)),
+								curTest.getString(curTest.getColumnIndex(Final.FINAL_VAL)),"type");
+						
+						list.add(a);
+					} while (curTest.moveToNext());
+				}			
+		return list;
 	
+}
+	//supprimer un objet
+	public boolean deleteObjet(Integer objet_id){
+		String[] str={objet_id.toString()};
+		activite.getContentResolver().delete(TutosAndroidProvider.CONTENT_URI_OBJET, Objet.OBJET_ID+"=?", str);
+		return true;		
+	}
+	
+	public boolean updateValFinal(Integer id_final,String val){
+		
+		ContentValues values = new ContentValues();
+		values.put(Final.FINAL_VAL,val );
+		String[] args={id_final.toString()};
+		
+		activite.getContentResolver().update(TutosAndroidProvider.CONTENT_URI_FINAL, values, Final.FINAL_ID+"=?", args);
+		return true;
+	}
+	
+	public boolean updateAttributeName (Integer id_attribut,String name){
+		ContentValues values = new ContentValues();
+		values.put(Final.FINAL_VAL,name );
+		String[] args={id_attribut.toString()};
+		
+		activite.getContentResolver().update(TutosAndroidProvider.CONTENT_URI_ATTRIBUT, values, Attribut.ATTRIBUT_NAME+"=?", args);
+		return true;
+		
+		
+	}
 	
 	
 }
