@@ -115,7 +115,7 @@ public class BddOperations {
 	}
 	
 	//ajouter un attribut comme attribut à un objet
-	public void addPrimitifToObjet(Integer objet_id, String attributName, Primitif_bean primitif  ){
+	public Integer addPrimitifToObjet(Integer objet_id, String attributName, Primitif_bean primitif  ){
 		///creation de l'attribut
 		ContentValues attribut=new ContentValues();
 		attribut.clear();
@@ -147,11 +147,11 @@ public class BddOperations {
 		valeur.put(Valeur.OBJET_ID, objet_id);
 		valeur.put(Valeur.ATTRIBUT_ID, max);
 		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,valeur);
-		
+		return max;
 	}
 	
 	//ajouter un attribut comme valeur final à un objet
-	public void addFinalToObjet(Integer objet_id, String attributName, Final_bean final_b  ){
+	public Integer addFinalToObjet(Integer objet_id, String attributName, Final_bean final_b  ){
 		///creation de l'attribut
 		ContentValues attribut=new ContentValues();
 		attribut.clear();
@@ -207,7 +207,7 @@ public class BddOperations {
 		valeur.put(Valeur.ATTRIBUT_ID, max);
 		valeur.put(Valeur.OBJET_ID, objet_id);
 		activite.getContentResolver().insert(TutosAndroidProvider.CONTENT_URI_VALEUR,valeur);
-	
+	    return max;
 	}
 	
 	//recuperer la liste des  bases de donnees 

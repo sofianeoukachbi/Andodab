@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.upem.m2.android.andodab.DAO.BddOperations;
+import fr.upem.m2.android.andodab.beans.AttributeObjet;
+import fr.upem.m2.android.andodab.beans.Bdd_bean;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,12 +22,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditValueObjectActivity extends Activity {
 	private LinearLayout linearLayout ;
 	private LinearLayout simplelinear;
 	Button btOk;
 	Button btno;
+	int idB;
+	
 	private BddOperations bddo;
 	List<String> list = new ArrayList<String>();
 	
@@ -32,8 +38,12 @@ public class EditValueObjectActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		   super.onCreate(savedInstanceState);
+		   idB = getIntent().getIntExtra("db_id", 0);
 		   
 		   bddo = new BddOperations(this);
+		   List<AttributeObjet> lis = bddo.getListAttributObjet(idB);
+//		   Log.i("li", lis.size()+"");
+		   Toast.makeText(EditValueObjectActivity.this,lis.size()+"", Toast.LENGTH_SHORT).show();
 		   
 	       /**
 	        * creation du linearLayout principale

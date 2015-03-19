@@ -1056,7 +1056,10 @@ public class TutosAndroidProvider extends ContentProvider {
 
 			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", o."+Objet.OBJET_ID+", a."+Attribut.ATTRIBUT_NAME+", o."+Objet.OBJET_NAME+", 'objet' as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o on o."+Objet.OBJET_ID+"=v."+Valeur.OBJET_TYPE_ID+" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
 
+<<<<<<< HEAD
 			
+=======
+>>>>>>> 619642a79a50ca3cca7bf752878bd4cf1ba32b60
 
 	}
        
@@ -1065,15 +1068,22 @@ public class TutosAndroidProvider extends ContentProvider {
 
 			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", P."+Primitif.PRIMITIF_ID+", a."+Attribut.ATTRIBUT_NAME+" ,P."+Primitif.PRIMITIF_NAME+", 'primitif' as type  from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_PRIMITIF+" p on p."+Primitif.PRIMITIF_ID+"=v."+Valeur.PRIMITIF_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
 
+<<<<<<< HEAD
 			
 
+=======
+>>>>>>> 619642a79a50ca3cca7bf752878bd4cf1ba32b60
 	}
        
        case FINALOFOBJET : {
 			
 
+<<<<<<< HEAD
 			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", f."+Final.FINAL_ID+", a."+Attribut.ATTRIBUT_NAME+", f."+Final.FINAL_VAL+", 'final' as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_FINAL+" f on f."+Final.FINAL_ID+"=v."+Valeur.FINAL_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
 
+=======
+			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", F."+Final.FINAL_ID+", a."+Attribut.ATTRIBUT_NAME+", F."+Final.FINAL_VAL+", 'final' as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_FINAL+" f on f."+Final.FINAL_ID+"=v."+Valeur.FINAL_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
+>>>>>>> 619642a79a50ca3cca7bf752878bd4cf1ba32b60
 
 	}
        

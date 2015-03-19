@@ -6,6 +6,7 @@ import java.util.List;
 import fr.upem.m2.android.andodab.DessinObjet.IFilsCallback;
 import fr.upem.m2.android.andodab.DAO.BddOperations;
 import fr.upem.m2.android.andodab.beans.Attribut_bean;
+import fr.upem.m2.android.andodab.beans.AttributeObjet;
 import fr.upem.m2.android.andodab.beans.Objet_bean;
 import android.app.Activity;
 import android.os.Bundle;
@@ -55,10 +56,13 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 			
 			int objectId = racine.getObjet_id();
 			
-			ArrayList<Attribut_bean> attributs = new ArrayList<Attribut_bean>();
-			attributs.add(new Attribut_bean("attrib1"));
+			ArrayList<AttributeObjet> attributs = new ArrayList<AttributeObjet>(db.getListAttributObjet(objectId));
+			//List<AttributeObjet> attributs =  db.getListAttributObjet(objectId);
+			Log.v("a","" +attributs.size()  );
+			attributs.add(new AttributeObjet(1,1,"aa","bb","cc"));
+			//attributs.add(new Attribut_bean("attrib1"));
 			
-			DessinObjet racineView = new DessinObjet(this, racine.getObjet_nom(), attributs, 80+x,60+y, false);
+			DessinObjet racineView = new DessinObjet(this, racine.getObjet_nom(), attributs, 80+x,60+y, false,objectId);
 			
 			 
   				RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50+x, 40+y);
@@ -145,7 +149,7 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 	 */
 
 	@Override
-	public void getFilsFromDb(String objectName, ArrayList<Attribut_bean> listAttributs) {
+	public void getFilsFromDb(String objectName, ArrayList<AttributeObjet> listAttributs, int objectId) {
 //	public void getFilsFromDb(String objectName, ArrayList<String> listAttributs) {
 		
 		mainLayout.removeAllViews();
@@ -163,7 +167,7 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 //		mainLayout.addView(pere, paramPere);
 		
 		DessinObjet pere = new DessinObjet(this, objectName, listAttributs,
- 				170, 60, false);
+ 				170, 60, false,objectId);
  		RelativeLayout.LayoutParams paramPere = new RelativeLayout.LayoutParams(
  				150, 40);
  		paramPere.leftMargin = 170;
@@ -215,17 +219,16 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
  		
  		
  		
- 		ArrayList<Objet_bean> filsList = new ArrayList<Objet_bean>();
+ 		ArrayList<Objet_bean> filsList = new ArrayList<Objet_bean>(db.getChildObjet(objectId));
 		filsList.add(new Objet_bean("fils1",null,null,0));
 		filsList.add(new Objet_bean("fils2",null,null,0));
-
-		ArrayList<ArrayList<Attribut_bean>> attributFils = new ArrayList<ArrayList<Attribut_bean>>();
+		Log.v("fils", ""+filsList.size());
+		ArrayList<ArrayList<AttributeObjet>> attributFils = new ArrayList<ArrayList<AttributeObjet>>();
 
 		for (Objet_bean fils : filsList) {
-			ArrayList<Attribut_bean> attribs = new ArrayList<Attribut_bean>();
-			attribs.add(new Attribut_bean("atrib 1 "+ fils.getObjet_nom()));
+			ArrayList<AttributeObjet> attribs = new ArrayList<AttributeObjet>();
+			attribs.add(new AttributeObjet(1,1,"val","atrib 1 "+ fils.getObjet_nom(),""));
 			
-
 			attributFils.add(attribs);
 
 		}
@@ -239,7 +242,7 @@ public class ConsultObjectsActivity extends Activity implements IFilsCallback {
 
 		for (int i = 0; i < filsList.size(); i++) {
 		DessinObjet filsView = new DessinObjet(this, filsList.get(i).getObjet_nom(),
-					attributFils.get(i), 50 + x, 270, true);
+					attributFils.get(i), 50 + x, 270, true,1);
 
 			DessinerFleche fleche = new DessinerFleche(this, 50 + x, 270,margeFleche,listAttributs.size());
 			mainLayout.addView(fleche);

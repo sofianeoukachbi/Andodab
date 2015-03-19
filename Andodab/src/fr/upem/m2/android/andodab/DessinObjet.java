@@ -3,6 +3,7 @@ package fr.upem.m2.android.andodab;
 import java.util.ArrayList;
 
 import fr.upem.m2.android.andodab.beans.Attribut_bean;
+import fr.upem.m2.android.andodab.beans.AttributeObjet;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,7 +22,7 @@ import android.view.View;
 	 *
 	 */
 	  public interface IFilsCallback {
-	        void getFilsFromDb(String objectName,ArrayList<Attribut_bean> listAttributs);
+	        void getFilsFromDb(String objectName,ArrayList<AttributeObjet> listAttributs,int idObjet);
 		 // void getFilsFromDb(String objectName,ArrayList<String> listAttributs);
 	    }
 	  
@@ -29,19 +30,21 @@ import android.view.View;
 	  
 	private IFilsCallback interfFils;
 	private  String objectName ;
-   private ArrayList<Attribut_bean> attributs ; 
+   private ArrayList<AttributeObjet> attributs ; 
 //	 private ArrayList<String> attributs ; 
     private int yText;
     private int xObject;
     private int yObject;
     private Boolean dessinerFleche;
+    private int idObjet;
       
     
-public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> listAttributs,int x,int y,Boolean dessinerFleche) {
+public DessinObjet(Context context,String objectName, ArrayList<AttributeObjet> listAttributs,int x,int y,Boolean dessinerFleche, int idObjet) {
 //    public DessinObjet(Context context,String objectName, ArrayList<String> listAttributs,int x,int y,Boolean dessinerFleche) {
 		super(context);	
 		setBackgroundColor(Color.CYAN);
-		this.attributs = new ArrayList<Attribut_bean>(listAttributs);
+		this.attributs = new ArrayList<AttributeObjet>(listAttributs);
+		this.idObjet = idObjet;
 	//	this.attributs = listAttributs;
 //		this.attributs = new ArrayList<String>(listAttributs);
 		this.objectName = objectName;		
@@ -60,7 +63,7 @@ public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> l
 /**
  * Envoyer à l'activité l'objet selectionner pour interoger la base de données et chercher ses fils
  */
-	interfFils.getFilsFromDb(this.objectName, this.attributs);
+	interfFils.getFilsFromDb(this.objectName, this.attributs,this.idObjet);
 	
 		return super.onTouchEvent(event);
 	}
@@ -86,9 +89,9 @@ public DessinObjet(Context context,String objectName, ArrayList<Attribut_bean> l
 			canvas.drawRect(r, p);
 			p.setTextSize(14);
 			
-			for (Attribut_bean attribut : attributs) {
+			for (AttributeObjet attribut : attributs) {
 //				for (String attribut : attributs) {
-					canvas.drawText(attribut.getAttribut_name(), 10, 17+yText, p);	
+					canvas.drawText(attribut.getAttribut_name()+" : " + attribut.getAttribut_val(), 10, 17+yText, p);	
 //					canvas.drawText(attribut, 10, 17+yText, p);	
 					yText+=20;
 				}
