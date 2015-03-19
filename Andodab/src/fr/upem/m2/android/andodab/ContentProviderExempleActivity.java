@@ -4,10 +4,17 @@ package fr.upem.m2.android.andodab;
 
 
 
+import java.util.List;
+
 import fr.upem.m2.android.andodab.R;
 import fr.upem.m2.android.andodab.DAO.BddOperations;
+import fr.upem.m2.android.andodab.beans.AttributeObjet;
+import fr.upem.m2.android.andodab.beans.Final_bean;
+import fr.upem.m2.android.andodab.beans.Objet_bean;
 import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Attribut;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Final;
 import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Objet;
+import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Valeur;
 import fr.upem.m2.android.andodab.providerAndo.TutosAndroidProvider;
 import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Bdd;
 import fr.upem.m2.android.andodab.providerAndo.SharedInformation.Primitif;
@@ -38,29 +45,40 @@ public class ContentProviderExempleActivity extends Activity {
 
 	private void displayContentProvider() {
 		
-//		BddOperations bddOp= new BddOperations();
-//		int i=bddOp.getListPrimitif().size();
-//		Toast.makeText(ContentProviderExempleActivity.this, "taille :"+ i+ "",
-//				Toast.LENGTH_LONG).show();
+		BddOperations bddOp= new BddOperations(this);
+		Final_bean final_b=new Final_bean(2, "izan", null);
+		Objet_bean objet_b=new Objet_bean("animal", null, null,null);
+		Integer i=bddOp.createObjet(objet_b);
+		bddOp.addFinalToObjet(2, "smith", final_b);
+		
+		List<AttributeObjet> list=bddOp.getListAttributObjet(2);
+		
+		Toast.makeText(this, list.size() + " ", Toast.LENGTH_LONG).show();
 		
 		
 		
+		//Toast.makeText(this, name + " ", Toast.LENGTH_LONG).show();
 		
-		String columnsTest[] = new String[] { Attribut.ATTRIBUT_NAME};
-		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_OBJETOFOBJET;
-		String contraites[] =new String[] {"1"};
-		Cursor curTest = managedQuery(mContactsTest, columnsTest, null, contraites, null);
+		
+		
+		String columnsTest[] = new String[] { Valeur.VALEUR_ID,Valeur.ATTRIBUT_ID,Valeur.FINAL_ID};
+		Uri mContactsTest = TutosAndroidProvider.CONTENT_URI_VALEUR;
+		//String contraites[] =new String[] {"1"};
+		Cursor curTest = managedQuery(mContactsTest, columnsTest, null, null, null);
 		Toast.makeText(ContentProviderExempleActivity.this, curTest.getCount() + "",
 				Toast.LENGTH_LONG).show();
 
 		if (curTest.moveToFirst()) {
-			String name = null;
+			Integer id = null;
+			Integer id_a = null;
+			Integer id_f=null;
 			do {
-				name = curTest.getString(curTest.getColumnIndex(Attribut.ATTRIBUT_NAME));
-				Toast.makeText(this, name + " ", Toast.LENGTH_LONG).show();
+				id = curTest.getInt(curTest.getColumnIndex(Valeur.VALEUR_ID));
+				id_a = curTest.getInt(curTest.getColumnIndex(Valeur.ATTRIBUT_ID));
+				id_f=curTest.getInt(curTest.getColumnIndex(Valeur.FINAL_ID));
+				Toast.makeText(this, id+" "+id_a+" "+id_f + " ", Toast.LENGTH_LONG).show();
 			} while (curTest.moveToNext());
-			
-			
+				
 		}
 		
 		

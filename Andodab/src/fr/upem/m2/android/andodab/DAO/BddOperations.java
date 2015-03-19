@@ -189,14 +189,14 @@ public class BddOperations {
 				
 		Integer maxf=null;
 		        
-	    if (curTest.moveToFirst()) {
+	    if (curTestf.moveToFirst()) {
 		            
 		         do {				
 
-						max=curTest.getInt(curTest.getColumnIndex("id_max"));
+						maxf=curTestf.getInt(curTest.getColumnIndex("id_max"));
 						
 						
-					} while (curTest.moveToNext());
+					} while (curTestf.moveToNext());
 				
 				}
 		
@@ -387,34 +387,34 @@ public class BddOperations {
 			//non des attributs et des primitif
 			
 			Uri mContactsTestp = TutosAndroidProvider.CONTENT_URI_PRIMITIFOFOBJET;
-			String columnsTestp[] = new String[] {Attribut.ATTRIBUT_ID,Primitif.PRIMITIF_ID, Attribut.ATTRIBUT_NAME,Objet.OBJET_NAME,"type"};
-			Cursor curTestp = activite.managedQuery(mContactsTest, columnsTest, null, contraites, null);
+			String columnsTestp[] = new String[] {Attribut.ATTRIBUT_ID,Primitif.PRIMITIF_ID, Attribut.ATTRIBUT_NAME,Primitif.PRIMITIF_NAME,"type"};
+			Cursor curTestp = activite.managedQuery(mContactsTestp, columnsTestp, null, contraites, null);
 			
-			if (curTest.moveToFirst()) {
+			if (curTestp.moveToFirst()) {
 				do {
-					AttributeObjet a=new AttributeObjet(curTest.getInt(curTest.getColumnIndex(Attribut.ATTRIBUT_ID)),
-							curTest.getInt(curTest.getColumnIndex(Primitif.PRIMITIF_ID)),
-							curTest.getString(curTest.getColumnIndex(Attribut.ATTRIBUT_NAME)),
-							curTest.getString(curTest.getColumnIndex(Primitif.PRIMITIF_NAME)),"type");
+					AttributeObjet a=new AttributeObjet(curTestp.getInt(curTestp.getColumnIndex(Attribut.ATTRIBUT_ID)),
+							curTestp.getInt(curTestp.getColumnIndex(Primitif.PRIMITIF_ID)),
+							curTestp.getString(curTestp.getColumnIndex(Attribut.ATTRIBUT_NAME)),
+							curTestp.getString(curTestp.getColumnIndex(Primitif.PRIMITIF_NAME)),"type");
 					
 					list.add(a);
-				} while (curTest.moveToNext());
+				} while (curTestp.moveToNext());
 			}
-				//non des attributs et des primitif
+				//non des attributs et des finaux
 				
 				Uri mContactsTestf = TutosAndroidProvider.CONTENT_URI_FINALOFOBJET;
-				String columnsTestf[] = new String[] {Attribut.ATTRIBUT_ID,Final.FINAL_ID, Attribut.ATTRIBUT_NAME,Objet.OBJET_NAME,"type"};
-				Cursor curTestf = activite.managedQuery(mContactsTest, columnsTest, null, contraites, null);
+				String columnsTestf[] = new String[] {Attribut.ATTRIBUT_ID,Final.FINAL_ID, Attribut.ATTRIBUT_NAME,Final.FINAL_VAL,"type"};
+				Cursor curTestf = activite.managedQuery(mContactsTestf, columnsTestf, null, contraites, null);
 				
-				if (curTest.moveToFirst()) {
+				if (curTestf.moveToFirst()) {
 					do {
-						AttributeObjet a=new AttributeObjet(curTest.getInt(curTest.getColumnIndex(Attribut.ATTRIBUT_ID)),
-								curTest.getInt(curTest.getColumnIndex(Final.FINAL_ID)),
-								curTest.getString(curTest.getColumnIndex(Attribut.ATTRIBUT_NAME)),
-								curTest.getString(curTest.getColumnIndex(Final.FINAL_VAL)),"type");
+						AttributeObjet a=new AttributeObjet(curTestf.getInt(curTestf.getColumnIndex(Attribut.ATTRIBUT_ID)),
+								curTestf.getInt(curTestf.getColumnIndex(Final.FINAL_ID)),
+								curTestf.getString(curTestf.getColumnIndex(Attribut.ATTRIBUT_NAME)),
+								curTestf.getString(curTestf.getColumnIndex(Final.FINAL_VAL)),"type");
 						
 						list.add(a);
-					} while (curTest.moveToNext());
+					} while (curTestf.moveToNext());
 				}			
 		return list;
 	

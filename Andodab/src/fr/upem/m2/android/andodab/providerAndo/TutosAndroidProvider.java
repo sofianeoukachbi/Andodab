@@ -1045,39 +1045,36 @@ public class TutosAndroidProvider extends ContentProvider {
       
        case OBJET_NONFINAUX: {
 			
-<<<<<<< HEAD
+
 			return db.rawQuery("select distinct o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o join "+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v on o."+Objet.OBJET_ID+"=v."+Valeur.OBJET_ID+" where v."+Valeur.OBJET_ID+" is not null or "+Valeur.PRIMITIF_ID+" is not null", null);	
-=======
-			return db.rawQuery("select max(o."+Objet.OBJET_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" as o", null);	
->>>>>>> 8dc891a7c1eb4afa03dc8fc9241957d76acb7a29
+
+
 	}
        
        case OBJETOFOBJET: {
 			
-<<<<<<< HEAD
-			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", o."+Objet.OBJET_ID+", a."+Attribut.ATTRIBUT_NAME+", o."+Objet.OBJET_NAME+", objet as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o on o."+Objet.OBJET_ID+"=v."+Valeur.OBJET_TYPE_ID+" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
-=======
-			return db.rawQuery("select max(o."+Attribut.ATTRIBUT_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" as o", null);	
->>>>>>> 8dc891a7c1eb4afa03dc8fc9241957d76acb7a29
+
+			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", o."+Objet.OBJET_ID+", a."+Attribut.ATTRIBUT_NAME+", o."+Objet.OBJET_NAME+", 'objet' as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o on o."+Objet.OBJET_ID+"=v."+Valeur.OBJET_TYPE_ID+" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
+
+			
+
 	}
        
        case PRIMITIFOFOBJET : {
 			
-<<<<<<< HEAD
-			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", P."+Primitif.PRIMITIF_ID+", a."+Attribut.ATTRIBUT_NAME+" ,P."+Primitif.PRIMITIF_NAME+", primitif as type  from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_PRIMITIF+" p on p."+Primitif.PRIMITIF_ID+"=v."+Valeur.PRIMITIF_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
-=======
-			return db.rawQuery("select max(o."+Final.FINAL_ID+") as id_max from "+CONTENT_PROVIDER_TABLE_NAME_FINAL+" as o", null);	
->>>>>>> 8dc891a7c1eb4afa03dc8fc9241957d76acb7a29
+
+			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", P."+Primitif.PRIMITIF_ID+", a."+Attribut.ATTRIBUT_NAME+" ,P."+Primitif.PRIMITIF_NAME+", 'primitif' as type  from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_PRIMITIF+" p on p."+Primitif.PRIMITIF_ID+"=v."+Valeur.PRIMITIF_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
+
+			
+
 	}
        
        case FINALOFOBJET : {
 			
-<<<<<<< HEAD
-			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", F."+Final.FINAL_ID+", a."+Attribut.ATTRIBUT_NAME+", F."+Final.FINAL_VAL+", final as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_FINAL+" f on f."+Final.FINAL_ID+"=v."+Valeur.FINAL_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
-=======
-			return db.rawQuery("select o.* from "+CONTENT_PROVIDER_TABLE_NAME_OBJET+" o where o."+Objet.OBJET_ID_OBJET+" is null and o."+Objet.OBJET_BDD_ID+"=?", selectionArgs);	
 
->>>>>>> 8dc891a7c1eb4afa03dc8fc9241957d76acb7a29
+			return db.rawQuery("select a."+Attribut.ATTRIBUT_ID+", f."+Final.FINAL_ID+", a."+Attribut.ATTRIBUT_NAME+", f."+Final.FINAL_VAL+", 'final' as type from ("+CONTENT_PROVIDER_TABLE_NAME_VALEUR+" v  join "+CONTENT_PROVIDER_TABLE_NAME_ATTRIBUT+" a on v."+Valeur.ATTRIBUT_ID+"=a."+Attribut.ATTRIBUT_ID+") join "+CONTENT_PROVIDER_TABLE_NAME_FINAL+" f on f."+Final.FINAL_ID+"=v."+Valeur.FINAL_ID +" where v."+Valeur.OBJET_ID+"=?", selectionArgs);	
+
+
 	}
        
 		default:
